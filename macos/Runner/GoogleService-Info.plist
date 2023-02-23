@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>343876007903-7pa13dbrchd4ppo6ljuidq4368bm2ehq.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.343876007903-7pa13dbrchd4ppo6ljuidq4368bm2ehq</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAgYyaYo77aDyLoYTq5u0Az45Qs5sijR90</string>
+	<key>GCM_SENDER_ID</key>
+	<string>343876007903</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.betterheroapp</string>
+	<key>PROJECT_ID</key>
+	<string>betterhero-830a0</string>
+	<key>STORAGE_BUCKET</key>
+	<string>betterhero-830a0.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:343876007903:ios:9c63a3d7a0769b91df766a</string>
+</dict>
+</plist>
