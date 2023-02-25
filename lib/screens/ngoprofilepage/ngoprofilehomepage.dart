@@ -55,7 +55,7 @@ class NGOProfileHomePage extends StatelessWidget {
             ),
           ),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         backgroundColor: Colors.white,
         appBar: AppBar(
           iconTheme: IconThemeData(
@@ -100,6 +100,9 @@ class NGOProfileHomePage extends StatelessWidget {
             NGOBioTexts(ngoBio: ngoBio),
             aboutNGOText(),
             CauseWidget(ngoWorkingPhotos: ngoWorkingPhotos),
+            SizedBox(
+              height: 80,
+            ),
             // volunteerText(),
             // VolunterProgramTilesWidget(),
             // eventText(),
