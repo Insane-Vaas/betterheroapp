@@ -32,6 +32,22 @@ class _HomeState extends State<Home> {
     }
   }
 
+  String profilePic = "";
+  String name = "";
+
+  Future getProfilePic() async {
+    String? picAdd = await FirebaseAuth.instance.currentUser!.photoURL;
+    String? userName = await FirebaseAuth.instance.currentUser!.displayName;
+
+    setState(() {
+      if (picAdd != null && name != null) {
+        profilePic = picAdd.toString();
+        name = userName.toString();
+      } else
+        profilePic = "";
+    });
+  }
+
   @override
   void initState() {
     getLocation();
@@ -42,16 +58,21 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: customScrollView(location),
+      body: customScrollView(location, name, profilePic),
     );
   }
 }
 
-CustomScrollView customScrollView(String location) {
+CustomScrollView customScrollView(
+    String location, String name, String profilePic) {
   return CustomScrollView(
     physics: const ClampingScrollPhysics(),
     slivers: [
-      AppBarWidget(location: location),
+      AppBarWidget(
+        location: location,
+        name: name,
+        profilePic: profilePic,
+      ),
       SliverToBoxAdapter(
         child: DonationIconWidget(),
       ),
@@ -82,16 +103,24 @@ CustomScrollView customScrollView(String location) {
 
 class AppBarWidget extends StatelessWidget {
   final String location;
-  const AppBarWidget({super.key, required this.location});
+  final String name;
+  final String profilePic;
+
+  const AppBarWidget({
+    super.key,
+    required this.location,
+    required this.name,
+    required this.profilePic,
+  });
 
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
       elevation: 0,
-      title: title(location),
+      title: title(location, name),
       backgroundColor: Colors.white,
-      actions: const [
-        ProfilePic(),
+      actions: [
+        ProfilePic(profilePic: profilePic),
       ],
       pinned: true,
       floating: true,
@@ -104,32 +133,9 @@ class AppBarWidget extends StatelessWidget {
   }
 }
 
-class ProfilePic extends StatefulWidget {
-  const ProfilePic({super.key});
-
-  @override
-  State<ProfilePic> createState() => _ProfilePicState();
-}
-
-class _ProfilePicState extends State<ProfilePic> {
-  String profilePic = "";
-
-  Future getProfilePic() async {
-    String? picAdd = await FirebaseAuth.instance.currentUser!.photoURL;
-
-    setState(() {
-      if (picAdd != null)
-        profilePic = picAdd.toString();
-      else
-        profilePic = "";
-    });
-  }
-
-  @override
-  void initState() {
-    getProfilePic();
-    super.initState();
-  }
+class ProfilePic extends StatelessWidget {
+  final String profilePic;
+  const ProfilePic({super.key, required this.profilePic});
 
   @override
   Widget build(BuildContext context) {
@@ -173,12 +179,12 @@ class _ProfilePicState extends State<ProfilePic> {
   }
 }
 
-Widget title(String location) {
+Widget title(String location, String name) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
       Text(
-        "Hi, Shubham",
+        "Hi, $name",
         style: TextStyle(
           color: Colors.black,
           fontSize: 17,

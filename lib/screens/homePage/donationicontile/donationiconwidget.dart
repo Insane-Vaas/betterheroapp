@@ -13,7 +13,7 @@ class DonationIconWidget extends StatelessWidget {
       },
       {
         "iconName": "images/catastrophe.png",
-        "causeName": "Catastrope",
+        "causeName": "Catasrophe ",
       },
       {
         "iconName": "images/ecology.png",
