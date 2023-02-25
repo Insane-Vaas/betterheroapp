@@ -36,28 +36,26 @@ class NGOProfileHomePage extends StatelessWidget {
         dividerColor: Colors.transparent,
       ),
       child: Scaffold(
-        persistentFooterButtons: [
-          Container(
-            color: Colors.transparent,
-            alignment: Alignment.bottomCenter,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                fixedSize: Size(150, 60),
-                shape: StadiumBorder(),
-              ),
-              onPressed: () {
-                context.goNamed('donationpage');
-              },
-              child: Text(
-                "Donate",
-                style: TextStyle(
-                  fontSize: 22,
-                ),
+        floatingActionButton: Container(
+          alignment: Alignment.bottomCenter,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.green,
+              fixedSize: Size(150, 50),
+              shape: StadiumBorder(),
+            ),
+            onPressed: () {
+              context.goNamed('donationpage');
+            },
+            child: Text(
+              "Donate",
+              style: TextStyle(
+                fontSize: 22,
               ),
             ),
-          )
-        ],
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         backgroundColor: Colors.white,
         appBar: AppBar(
           iconTheme: IconThemeData(

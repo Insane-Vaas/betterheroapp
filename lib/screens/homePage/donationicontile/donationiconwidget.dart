@@ -51,12 +51,12 @@ class DonationIconWidget extends StatelessWidget {
           itemCount: listIconTile.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4,
-            mainAxisSpacing: 12,
+            mainAxisSpacing: 15,
           ),
           itemBuilder: (context, index) {
             return Container(
-              margin: EdgeInsets.zero,
-              height: MediaQuery.of(context).size.height * 0.025,
+              margin: EdgeInsets.all(4),
+              height: MediaQuery.of(context).size.height * 0.01,
               child: GestureDetector(
                 onTap: (() {
                   context.goNamed(
