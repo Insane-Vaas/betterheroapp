@@ -87,7 +87,8 @@ class DonationIconWidget extends StatelessWidget {
                     Text(
                       "${listIconTile[index]["causeName"]}",
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
                       ),
                     )
                   ],
