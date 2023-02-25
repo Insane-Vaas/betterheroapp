@@ -68,7 +68,7 @@ class DonationIconWidget extends StatelessWidget {
                 }),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
                       height: 60,
@@ -80,6 +80,9 @@ class DonationIconWidget extends StatelessWidget {
                           ),
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      height: 5,
                     ),
                     Text(
                       "${listIconTile[index]["causeName"]}",
