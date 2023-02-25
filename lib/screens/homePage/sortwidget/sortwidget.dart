@@ -12,37 +12,36 @@ class SortingAndFilterWidget extends StatelessWidget {
       "Nearby",
     ];
     return Container(
-      margin: EdgeInsets.fromLTRB(4, 0, 4, 0),
-      height: MediaQuery.of(context).size.height * 0.06,
-      child: ListView.builder(
-        shrinkWrap: true,
-        scrollDirection: Axis.horizontal,
-        itemCount: listString.length,
-        itemBuilder: (context, index) {
-          return Container(
-            margin: const EdgeInsets.all(4),
-            child: GestureDetector(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: List<Widget>.generate(
+          listString.length,
+          (int idx) {
+            return GestureDetector(
               onTap: () {
                 print("Something");
               },
               child: Chip(
-                padding: EdgeInsets.all(2),
+                backgroundColor: Color.fromARGB(255, 3, 171, 70),
                 label: Text(
-                  "${listString[index]}",
+                  "${listString[idx]}",
                   style: sortingTextStyle(),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ).toList(),
       ),
+      margin: EdgeInsets.symmetric(
+          horizontal: MediaQuery.of(context).size.width * 0.05),
     );
   }
 }
 
 TextStyle sortingTextStyle() {
   return TextStyle(
-    color: Colors.black,
-    fontSize: 15,
+    color: Colors.white,
+    fontSize: 12,
+    fontWeight: FontWeight.bold,
   );
 }
