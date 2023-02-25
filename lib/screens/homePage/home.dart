@@ -247,7 +247,7 @@ class SearchArea extends StatelessWidget {
           padding: EdgeInsets.all(5),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(
-                20,
+                25,
               ),
               border: Border.all(
                 color: Colors.green.shade400,

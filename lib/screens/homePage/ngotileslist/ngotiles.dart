@@ -210,21 +210,20 @@ Container ngoTileBackImageAndLike(double height, List<dynamic>? imgList) {
 
 BoxDecoration ngoTileWidgetDecoration() {
   return BoxDecoration(
-    borderRadius: BorderRadius.circular(18),
-    boxShadow: [
-      BoxShadow(
-        color: Colors.grey.shade500,
-        blurRadius: 5,
-        offset: Offset(4, 4),
-      ),
-      BoxShadow(
-        color: Colors.grey.shade300,
-        blurRadius: 4,
-        offset: Offset(-1, -1),
-      ),
-    ],
-    color: Colors.white,
-  );
+      borderRadius: BorderRadius.circular(18),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.shade500,
+          blurRadius: 5,
+          offset: Offset(4, 4),
+        ),
+        BoxShadow(
+          color: Colors.grey.shade300,
+          blurRadius: 4,
+          offset: Offset(-1, -1),
+        ),
+      ],
+      color: Colors.grey.shade200);
 }
 
 Container ngoNameCauseAndRating(
