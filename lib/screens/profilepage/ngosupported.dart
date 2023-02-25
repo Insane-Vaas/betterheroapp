@@ -10,20 +10,24 @@ class NGOSupportedByUser extends StatefulWidget {
 class _NGOSupportedByUserState extends State<NGOSupportedByUser> {
   List<Map<String, String>> list = [
     {
-      "ngoName": "Udhaar Foundation",
-      "ngoLogo": "images/ngoprofilepics/udhaar/udhaar_lg.jpg",
+      "ngoName": "Udaar Foundation",
+      "ngoLogo":
+          "https://github.com/Insane-Vaas/randompics/blob/main/udhaar_lg.jpg?raw=true",
     },
     {
-      "ngoName": "Jag Kalyan",
-      "ngoLogo": "images/ngoprofilepics/jagkalyanlogo.png",
+      "ngoName": "ASHRAY SEWA SAMITI",
+      "ngoLogo":
+          "https://github.com/Insane-Vaas/randompics/blob/main/ASHRAY%20SEWA%20SAMITI/download.png?raw=true",
     },
     {
-      "ngoName": "One Hand For Happiness",
-      "ngoLogo": "images/ngoprofilepics/onehandforhappinesslogo.png",
+      "ngoName": "ROSNI SOCIETY",
+      "ngoLogo":
+          "https://scontent.fdel1-5.fna.fbcdn.net/v/t39.30808-6/308200046_393239723017287_5717676169692199196_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=7Ar_lU5t2kkAX-C0KKV&_nc_ht=scontent.fdel1-5.fna&oh=00_AfAAA3VF_RzXaFGvI_rGQvJekzcOXF9jeTwevz-f7l9BCw&oe=63FEFBD8",
     },
     {
-      "ngoName": "Upasna",
-      "ngoLogo": "images/ngoprofilepics/upasnalogo.jpg",
+      "ngoName": "Astha Kunj Society",
+      "ngoLogo":
+          "https://github.com/Insane-Vaas/randompics/blob/main/asthakunjsociety/jagkalyanlogo.png?raw=true",
     }
   ];
 
@@ -78,7 +82,7 @@ Widget ngoWidgetTile(Map<String, String> map) {
 Widget ngoBackgroundImageWidget(String ngoLogo) {
   return CircleAvatar(
     radius: 40,
-    backgroundImage: AssetImage(
+    backgroundImage: NetworkImage(
       ngoLogo,
     ),
   );

@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 
 class BasicUserInfo extends StatelessWidget {
-  const BasicUserInfo({super.key});
+  final String name;
+  const BasicUserInfo({super.key, required this.name});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        userName(),
+        userName(name),
         userBio(),
       ],
     );
   }
 }
 
-Container userName() {
+Container userName(String name) {
   return Container(
     alignment: Alignment.center,
     child: Text(
-      "Shubham Dharmsktu",
+      "$name",
       style: userNameTextStyle(),
     ),
   );
@@ -30,7 +31,7 @@ Container userBio() {
     alignment: Alignment.center,
     child: Text(
       textAlign: TextAlign.center,
-      "Basic User info that he wants to share with other folks.",
+      "Basic User info that he/she/they wants to share with other folks.",
       style: userBioTextStyle(),
     ),
   );

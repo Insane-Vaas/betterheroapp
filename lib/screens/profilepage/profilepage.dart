@@ -10,11 +10,13 @@ import 'bacgroundpicandprofile.dart';
 class UserProfilePage extends StatefulWidget {
   final String? userUID;
   final String? profilePic;
+  final String? name;
 
   const UserProfilePage({
     Key? key,
     this.userUID,
     this.profilePic,
+    required this.name,
   }) : super(key: key);
 
   @override
@@ -57,7 +59,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.07,
             ),
-            BasicUserInfo(),
+            BasicUserInfo(
+              name: widget.name.toString(),
+            ),
             ngoSupportedText(),
             NGOSupportedByUser(),
           ],

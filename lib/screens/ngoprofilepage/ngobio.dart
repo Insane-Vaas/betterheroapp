@@ -1,57 +1,39 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
+import 'dart:convert';
 
 class CauseWidget extends StatefulWidget {
-  const CauseWidget({super.key});
+  List<dynamic>? ngoWorkingPhotos;
+  CauseWidget({
+    Key? key,
+    this.ngoWorkingPhotos,
+  }) : super(key: key);
 
   @override
   State<CauseWidget> createState() => _CauseWidgetState();
 }
 
 class _CauseWidgetState extends State<CauseWidget> {
-  List<Map<String?, String?>> causeImgAndText = [
-    {
-      "img": "images/ngoprofilepics/udhaar/udhaar_1.jpeg",
-      "causeText":
-          "we have turned out widely for in excess of 500 Students to connect and restore understudies from the oppressed section. ",
-    },
-    {
-      "img": "images/ngoprofilepics/udhaar/udhaar_2.jpeg",
-      "causeText":
-          "We do this through very much arranged and far reaching programs in wellbeing, schooling, recovery, restorative.",
-    },
-    {
-      "img": "images/ngoprofilepics/udhaar/udhaar_3.jpeg",
-      "causeText":
-          "Udaar is highly inspired with various national and international philosophers , thinkers and great personalities.",
-    },
-    {
-      "img": "images/ngoprofilepics/udhaar/udhaar_4.jpeg",
-      "causeText":
-          "We are an association that causes the ghettos to take care their schooling people understand their expectations.",
-    },
-  ];
+  late List<Widget> widgetList = [];
 
-  late List<Widget> widgetList = [
-    ngoStoriesWidget(
-      causeImgAndText[0]["img"],
-      causeImgAndText[0]["causeText"],
-    ),
-    ngoStoriesWidget(
-      causeImgAndText[1]["img"],
-      causeImgAndText[1]["causeText"],
-    ),
-    ngoStoriesWidget(
-      causeImgAndText[2]["img"],
-      causeImgAndText[2]["causeText"],
-    ),
-    ngoStoriesWidget(
-      causeImgAndText[3]["img"],
-      causeImgAndText[3]["causeText"],
-    ),
-  ];
+  Future getWorkingPics() async {
+    for (int i = 0; i < widget.ngoWorkingPhotos!.length; i++) {
+      setState(() {
+        widgetList.add(ngoStoriesWidget(widget.ngoWorkingPhotos![i], ""));
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    getWorkingPics();
+    super.initState();
+  }
 
   int currentIdx = 0;
 
@@ -81,21 +63,23 @@ class _CauseWidgetState extends State<CauseWidget> {
             ),
           ),
         ),
-        Container(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-          child: DotsIndicator(
-            dotsCount: widgetList.length,
-            position: currentIdx.toDouble(),
-            decorator: DotsDecorator(
-              color: Colors.grey,
-              activeColor: Colors.black,
-              size: const Size.square(9.0),
-              activeSize: const Size(18.0, 9.0),
-              activeShape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0)),
-            ),
-          ),
-        ),
+        widgetList.length > 0
+            ? Container(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: DotsIndicator(
+                  dotsCount: widgetList.length,
+                  position: currentIdx.toDouble(),
+                  decorator: DotsDecorator(
+                    color: Colors.grey,
+                    activeColor: Colors.black,
+                    size: const Size.square(9.0),
+                    activeSize: const Size(18.0, 9.0),
+                    activeShape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0)),
+                  ),
+                ),
+              )
+            : SizedBox(),
       ],
     );
   }
@@ -131,7 +115,7 @@ class NGOPhotoAreaForCause extends StatelessWidget {
 
 ClipRRect ngoCausePhoto(String? img) {
   return ClipRRect(
-      borderRadius: BorderRadius.circular(10), child: Image.asset(img!));
+      borderRadius: BorderRadius.circular(10), child: Image.network(img!));
 }
 
 class NGOCauseTexts extends StatelessWidget {
@@ -156,19 +140,23 @@ Widget ngoCauseText(String? cause) {
 }
 
 class NGOBioTexts extends StatelessWidget {
-  const NGOBioTexts({super.key});
+  String? ngoBio;
+  NGOBioTexts({
+    Key? key,
+    this.ngoBio,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.fromLTRB(20, 8, 20, 8),
       width: MediaQuery.of(context).size.width * 0.9,
-      child: ngoBioText(),
+      child: ngoBioText(ngoBio),
     );
   }
 }
 
-Widget ngoBioText() {
+Widget ngoBioText(String? ngoBio) {
   return ReadMoreText(
     moreStyle: TextStyle(
       color: Colors.blue,
@@ -179,6 +167,6 @@ Widget ngoBioText() {
     textAlign: TextAlign.justify,
     trimLines: 2,
     textScaleFactor: 1.1,
-    '''Udaar Foundation Non Government organisation (NGO) established on 16 Aug 2020 by Rishikant Mishra and his team. The committed organizers never realized that they would be effectively running a set up NGO, 'Udaar Foundation' spread across UP states. Udaar Foundation trusts and engages in giving all the assets to the penniless to help them so that they can make their own predetermination. We established this NGO due to the need of offering a chance to help the helpless kids, individuals and youth of India. We aim to diminish the destitution in India. Throughout the recent 2 years, Udaar Foundation has dealt with numerous tasks identified with mindfulness crusades like - Seminars on feminine wellbeing, women strengthening, sports, and women business venture which points toward aiding the oppressed part of the country. We have consistently believed that through development and grassroot endeavors, our youngsters can change this nation. Regardless of whether rich or poor, the cutting edge has the ability to change this world. The wide range of our exercises and their prosperity rate talk about committed work done by Udaar Foundation  ''',
+    '''${ngoBio.toString()}''',
   );
 }

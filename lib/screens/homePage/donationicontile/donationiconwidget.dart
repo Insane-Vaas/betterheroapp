@@ -13,7 +13,7 @@ class DonationIconWidget extends StatelessWidget {
       },
       {
         "iconName": "images/catastrophe.png",
-        "causeName": "Catasrophe ",
+        "causeName": "Catastrophe",
       },
       {
         "iconName": "images/ecology.png",
@@ -51,12 +51,12 @@ class DonationIconWidget extends StatelessWidget {
           itemCount: listIconTile.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4,
-            mainAxisSpacing: 15,
+            mainAxisSpacing: 12,
           ),
           itemBuilder: (context, index) {
             return Container(
-              margin: EdgeInsets.all(8),
-              height: MediaQuery.of(context).size.height * 0.02,
+              margin: EdgeInsets.zero,
+              height: MediaQuery.of(context).size.height * 0.025,
               child: GestureDetector(
                 onTap: (() {
                   context.goNamed(
@@ -81,7 +81,12 @@ class DonationIconWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Text("${listIconTile[index]["causeName"]}")
+                    Text(
+                      "${listIconTile[index]["causeName"]}",
+                      style: TextStyle(
+                        fontSize: 15,
+                      ),
+                    )
                   ],
                 ),
               ),

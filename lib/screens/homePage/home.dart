@@ -40,7 +40,7 @@ class _HomeState extends State<Home> {
     String? userName = await FirebaseAuth.instance.currentUser!.displayName;
 
     setState(() {
-      if (picAdd != null && name != null) {
+      if (picAdd != null) {
         profilePic = picAdd.toString();
         name = userName.toString();
       } else
@@ -51,6 +51,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     getLocation();
+    getProfilePic();
     super.initState();
   }
 
@@ -120,12 +121,15 @@ class AppBarWidget extends StatelessWidget {
       title: title(location, name),
       backgroundColor: Colors.white,
       actions: [
-        ProfilePic(profilePic: profilePic),
+        ProfilePic(
+          profilePic: profilePic,
+          name: name,
+        ),
       ],
       pinned: true,
       floating: true,
       centerTitle: false,
-      expandedHeight: MediaQuery.of(context).size.height * 0.18,
+      expandedHeight: MediaQuery.of(context).size.height * 0.16,
       bottom: searchAndSortArea(
         MediaQuery.of(context).size.height,
       ),
@@ -135,7 +139,8 @@ class AppBarWidget extends StatelessWidget {
 
 class ProfilePic extends StatelessWidget {
   final String profilePic;
-  const ProfilePic({super.key, required this.profilePic});
+  final String name;
+  const ProfilePic({super.key, required this.profilePic, required this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -145,6 +150,7 @@ class ProfilePic extends StatelessWidget {
           "profilePage",
           queryParams: {
             "profilePic": profilePic,
+            "name": name,
           },
         );
       },
@@ -184,7 +190,7 @@ Widget title(String location, String name) {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
       Text(
-        "Hi, $name",
+        name != "" ? "Hi, $name" : "Hi, Guest",
         style: TextStyle(
           color: Colors.black,
           fontSize: 17,
@@ -204,7 +210,7 @@ Widget title(String location, String name) {
 
 PreferredSize searchAndSortArea(double height) {
   return PreferredSize(
-    preferredSize: Size.fromHeight(height * 0.12),
+    preferredSize: Size.fromHeight(height * 0.1211),
     child: Container(
       margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
       color: Colors.white,
@@ -212,7 +218,7 @@ PreferredSize searchAndSortArea(double height) {
         shrinkWrap: true,
         physics: ClampingScrollPhysics(),
         children: [
-          SearchArea(height: height),
+          SearchArea(),
           SortingAndFilterWidget(),
         ],
       ),
@@ -221,14 +227,13 @@ PreferredSize searchAndSortArea(double height) {
 }
 
 class SearchArea extends StatelessWidget {
-  final double height;
   SearchArea({
     Key? key,
-    required this.height,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final ScrollController controller = ScrollController();
     return Hero(
       tag: "search",
       child: GestureDetector(
@@ -237,7 +242,7 @@ class SearchArea extends StatelessWidget {
         },
         child: Container(
           margin: const EdgeInsets.all(4),
-          height: height * 0.0512,
+          height: MediaQuery.of(context).size.height * 0.0512,
           width: 400,
           padding: EdgeInsets.all(5),
           decoration: BoxDecoration(
@@ -249,9 +254,28 @@ class SearchArea extends StatelessWidget {
                 width: 2,
               )),
           alignment: Alignment.centerLeft,
-          child: Icon(
-            Icons.search,
-            color: Colors.green.shade500,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.search,
+                color: Colors.green.shade500,
+                size: 25,
+              ),
+              Container(
+                margin: EdgeInsets.fromLTRB(4, 0, 0, 0),
+                alignment: Alignment.centerLeft,
+                height: MediaQuery.of(context).size.height * 0.0512,
+                width: 300,
+                child: Text(
+                  "Search",
+                  style: TextStyle(
+                    color: Colors.grey.shade600.withOpacity(0.9),
+                    fontSize: 23,
+                  ),
+                ),
+              ),
+            ],
           ),
 
           //TextField(
@@ -300,3 +324,49 @@ OutlineInputBorder focusedBorder() {
     ),
   );
 }
+
+
+// ListView.builder(
+//                   controller: controller,
+//                   padding: EdgeInsets.zero,
+//                   reverse: true,
+//                   scrollDirection: Axis.vertical,
+//                   shrinkWrap: true,
+//                   itemCount: 5,
+//                   physics: NeverScrollableScrollPhysics(),
+//                   itemBuilder: (context, index) {
+//                     if (controller.hasClients) {
+//                       // Future.delayed(
+//                       //   Duration(
+//                       //     seconds: 2,
+//                       //   ),
+//                       //   () {
+//                       //     if (index >= 0) {
+//                       //       controller.animateTo(
+//                       //           controller.position.maxScrollExtent,
+//                       //           duration: Duration(seconds: 10),
+//                       //           curve: Curves.ease);
+//                       //       index = index + 1;
+//                       //     } else if (index < 5) {
+//                       //       controller.animateTo(
+//                       //           controller.position.minScrollExtent,
+//                       //           duration: Duration(seconds: 2),
+//                       //           curve: Curves.ease);
+//                       //       index = index - 1;
+//                       //     }
+//                       //   },
+//                       // );
+//                     }
+//                     return Container(
+//                       alignment: Alignment.centerLeft,
+//                       height: height * 0.039,
+//                       child: Text(
+//                         '''Search "Something"''',
+//                         style: TextStyle(
+//                           fontSize: 20,
+//                           color: Colors.grey.shade600.withOpacity(0.9),
+//                         ),
+//                       ),
+//                     );
+//                   },
+//                 ),

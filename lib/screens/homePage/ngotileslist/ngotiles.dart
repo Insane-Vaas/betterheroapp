@@ -1,5 +1,9 @@
+import 'dart:convert';
+
+import 'package:betterheroapp/model/ngomodel/ngomodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
 class NGOTilesListWidget extends StatefulWidget {
@@ -10,74 +14,22 @@ class NGOTilesListWidget extends StatefulWidget {
 }
 
 class _NGOTilesListWidgetState extends State<NGOTilesListWidget> {
-  List<Map<dynamic, dynamic>> list = [
-    {
-      "ngoName": "Udhar Foundation",
-      "ngoCause": "Child Education, Women Emp...",
-      "ngoRating": "4.3",
-      "imgList": [
-        "images/ngoprofilepics/udhaar/udhaar_1.jpeg",
-        "images/ngoprofilepics/udhaar/udhaar_2.jpeg",
-        "images/ngoprofilepics/udhaar/udhaar_3.jpeg",
-        "images/ngoprofilepics/udhaar/udhaar_4.jpeg",
-        "images/ngoprofilepics/udhaar/udhaar_5.jpeg",
-      ],
-    },
-    {
-      "ngoName": "One Hand For Happiness",
-      "ngoCause": "Child Education",
-      "ngoRating": "4.2",
-      "imgList": [
-        "images/ngoprofilepics/onehandforhappiness/one_hand_for_happiness_1.jpeg",
-        "images/ngoprofilepics/onehandforhappiness/one_hand_for_happiness_2.jpeg",
-        "images/ngoprofilepics/onehandforhappiness/one_hand_for_happiness_3.jpeg"
-      ],
-    },
-    {
-      "ngoName": "Save A Stray",
-      "ngoCause": "Animal Care",
-      "ngoRating": "4.1",
-      "imgList": [
-        "images/ngoprofilepics/saveastray/save_a_stray_1.jpeg",
-        "images/ngoprofilepics/saveastray/save_a_stray_2.jpeg",
-        "images/ngoprofilepics/saveastray/save_a_stray_3.jpeg"
-      ],
-    },
-    {
-      "ngoName": "Upasna",
-      "ngoCause": "Specially Abled Kid",
-      "ngoRating": "4.4",
-      "imgList": [
-        "images/ngoprofilepics/upasna/upasna_1.JPG",
-        "images/ngoprofilepics/upasna/upasna_2.JPG",
-        "images/ngoprofilepics/upasna/upasna_3.JPG",
-        "images/ngoprofilepics/upasna/upasna_4.JPG"
-      ],
-    },
-    {
-      "ngoName": "Astha Kunj Society",
-      "ngoCause": "Women Empowerment",
-      "ngoRating": "4.2",
-      "imgList": [
-        "images/ngoprofilepics/asthakunjsociety/asthakunjsociety_3.jpg",
-        "images/ngoprofilepics/asthakunjsociety/asthakunjsociety_2.jpg",
-        "images/ngoprofilepics/asthakunjsociety/asthakunjsociety_1.jpg"
-      ],
-    },
-  ];
+  List<dynamic> list = [];
 
-  final List<Map<dynamic, dynamic>> ngoDataList = [
-    {
-      "ngoName": "Udhaar Foundation",
-      "ngoBackground": "",
-      "ngoLogo": "",
-      "ngoRating": "",
-      "ngoCauses": "",
-      "ngoBio": "",
-      "ngoImg": "",
-      "ngoLines": "",
-    },
-  ];
+  Future getNgoData() async {
+    final String x = await rootBundle.loadString('images/data.json');
+    final List data = await json.decode(x)['ngoData'];
+
+    setState(() {
+      list = data;
+    });
+  }
+
+  @override
+  void initState() {
+    getNgoData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,10 +40,13 @@ class _NGOTilesListWidgetState extends State<NGOTilesListWidget> {
       itemCount: list.length,
       itemBuilder: (context, index) {
         return NGOTileWidget(
-          ngoName: list[index]["ngoName"],
-          ngoCause: list[index]["ngoCause"],
-          ngoRating: list[index]["ngoRating"],
-          imgList: list[index]["imgList"],
+          ngoName: list[index]['ngoName'],
+          ngoCauses: list[index]['ngoCauses'],
+          ngoRating: list[index]['ngoRating'],
+          imgList: list[index]['ngoWorkingPhotos'],
+          ngoBio: list[index]['ngoBio'],
+          ngoLogoPic: list[index]['ngoLogoPhoto'],
+          ngoTeamPhoto: list[index]['ngoTeamPhotos'][0],
         );
       },
     );
@@ -100,15 +55,22 @@ class _NGOTilesListWidgetState extends State<NGOTilesListWidget> {
 
 class NGOTileWidget extends StatefulWidget {
   final String? ngoName;
-  final String? ngoCause;
+  final String? ngoCauses;
   final String? ngoRating;
-  final List<dynamic> imgList;
+  final List<dynamic>? imgList;
+  final String? ngoLogoPic;
+  final String? ngoBio;
+  final String? ngoTeamPhoto;
+
   const NGOTileWidget({
     super.key,
     required this.ngoName,
-    required this.ngoCause,
+    required this.ngoCauses,
     required this.ngoRating,
     required this.imgList,
+    this.ngoLogoPic,
+    this.ngoBio,
+    this.ngoTeamPhoto,
   });
 
   @override
@@ -120,10 +82,18 @@ class _NGOTileWidgetState extends State<NGOTileWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        print(widget.imgList!.length);
         context.pushNamed(
           'ngoprofilePage',
+          extra: widget.imgList,
           queryParams: {
             "ngoUID": "awdadwwad",
+            "ngoName": widget.ngoName,
+            "ngoCauses": widget.ngoCauses,
+            "ngoRating": widget.ngoRating,
+            "ngoLogoPhoto": widget.ngoLogoPic,
+            "ngoBio": widget.ngoBio,
+            "ngoTeamPhoto": widget.ngoTeamPhoto
           },
         );
       },
@@ -132,14 +102,16 @@ class _NGOTileWidgetState extends State<NGOTileWidget> {
         margin: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.02,
             15, MediaQuery.of(context).size.width * 0.02, 15),
         height: MediaQuery.of(context).size.height * 0.31,
+        width: MediaQuery.of(context).size.width * 0.9,
         child: Column(
           children: [
             ngoTileBackImageAndLike(
                 MediaQuery.of(context).size.height * 0.23, widget.imgList),
             ngoNameCauseAndRating(
               widget.ngoName,
-              widget.ngoCause,
+              widget.ngoCauses,
               widget.ngoRating,
+              MediaQuery.of(context).size.width * 0.9,
             ),
           ],
         ),
@@ -148,9 +120,10 @@ class _NGOTileWidgetState extends State<NGOTileWidget> {
   }
 }
 
-Container ngoTileBackImageAndLike(double height, List<dynamic> imglist) {
+Container ngoTileBackImageAndLike(double height, List<dynamic>? imgList) {
   PageController _pageController = PageController();
   late bool liked = false;
+
   return Container(
     height: height,
     decoration: BoxDecoration(
@@ -162,8 +135,9 @@ Container ngoTileBackImageAndLike(double height, List<dynamic> imglist) {
     child: Stack(
       children: [
         PageView.builder(
-          itemCount: imglist.length,
-          //reverse: false,
+          itemCount: imgList!.length,
+          reverse: false,
+          physics: BouncingScrollPhysics(),
           controller: _pageController,
           itemBuilder: (context, index) {
             return ClipRRect(
@@ -171,8 +145,8 @@ Container ngoTileBackImageAndLike(double height, List<dynamic> imglist) {
                 topLeft: Radius.circular(18),
                 topRight: Radius.circular(18),
               ),
-              child: Image.asset(
-                imglist[index],
+              child: Image.network(
+                imgList[index],
                 fit: BoxFit.cover,
               ),
             );
@@ -253,42 +227,42 @@ BoxDecoration ngoTileWidgetDecoration() {
   );
 }
 
-Row ngoNameCauseAndRating(
-    String? ngoName, String? ngoCause, String? ngorating) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      ngoNameCause(
-        ngoName,
-        ngoCause,
-      ),
-      ngoRating(ngorating),
-    ],
+Container ngoNameCauseAndRating(
+    String? ngoName, String? ngoCause, String? ngorating, double width) {
+  return Container(
+    width: width,
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ngoNameCause(
+          ngoName,
+          ngoCause,
+        ),
+        ngoRating(ngorating),
+      ],
+    ),
   );
 }
 
 Container ngoNameCause(String? ngoName, String? ngoCause) {
   return Container(
-    margin: EdgeInsets.fromLTRB(8, 4, 20, 4),
+    width: 220,
+    margin: EdgeInsets.fromLTRB(8, 4, 0, 4),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          margin: EdgeInsets.all(2),
-          child: Text(
-            "$ngoName",
-            style: ngoNameTextStyle(),
-          ),
+        Text(
+          "$ngoName",
+          style: ngoNameTextStyle(),
+          overflow: TextOverflow.ellipsis,
         ),
-        Container(
-          margin: EdgeInsets.all(2),
-          child: Text(
-            "$ngoCause",
-            style: ngoCauseTextStyle(),
-          ),
-        ),
+        Text(
+          ngoCause.toString(),
+          overflow: TextOverflow.ellipsis,
+          style: ngoCauseTextStyle(),
+        )
       ],
     ),
   );
@@ -316,8 +290,8 @@ Container ngoRating(String? ngorating) {
       color: Colors.green,
       borderRadius: BorderRadius.circular(20),
     ),
-    margin: EdgeInsets.fromLTRB(8, 4, 8, 4),
-    padding: EdgeInsets.all(2),
+    margin: EdgeInsets.fromLTRB(8, 4, 10, 4),
+    padding: EdgeInsets.fromLTRB(8, 2, 8, 2),
     alignment: Alignment.topRight,
     child: Text(
       "${ngorating} ⭑",
@@ -329,7 +303,7 @@ Container ngoRating(String? ngorating) {
 TextStyle ratingTextStyle() {
   return TextStyle(
     color: Colors.white,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: FontWeight.w600,
   );
 }

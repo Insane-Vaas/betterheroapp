@@ -9,10 +9,24 @@ import 'ngobackgroundandprofile.dart';
 
 class NGOProfileHomePage extends StatelessWidget {
   final String? ngoUID;
+  final String? ngoName;
+  final String? ngoCauses;
+  final String? ngoBio;
+  final String? ngoRating;
+  final List<dynamic>? ngoWorkingPhotos;
+  final String? ngoLogoPhoto;
+  final String? ngoTeamPhoto;
 
   const NGOProfileHomePage({
     super.key,
     this.ngoUID,
+    this.ngoName,
+    this.ngoCauses,
+    this.ngoBio,
+    this.ngoRating,
+    this.ngoWorkingPhotos,
+    this.ngoLogoPhoto,
+    this.ngoTeamPhoto,
   });
 
   @override
@@ -24,6 +38,7 @@ class NGOProfileHomePage extends StatelessWidget {
       child: Scaffold(
         persistentFooterButtons: [
           Container(
+            color: Colors.transparent,
             alignment: Alignment.bottomCenter,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -50,7 +65,7 @@ class NGOProfileHomePage extends StatelessWidget {
           ),
           centerTitle: true,
           title: Text(
-            "Udhaar Foundation",
+            ngoName.toString(),
             style: TextStyle(
               color: Colors.black,
               fontSize: 25,
@@ -76,16 +91,17 @@ class NGOProfileHomePage extends StatelessWidget {
         ),
         body: ListView(
           children: [
-            StackNGOProfileAndBackground(),
+            StackNGOProfileAndBackground(
+                bgPic: ngoTeamPhoto, logoPic: ngoLogoPhoto),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.07,
             ),
-            ngoNameText(),
-            rating(),
-            ngoCause(),
-            NGOBioTexts(),
+            ngoNameText(ngoName),
+            rating(ngoRating),
+            ngoCause(ngoCauses),
+            NGOBioTexts(ngoBio: ngoBio),
             aboutNGOText(),
-            CauseWidget(),
+            CauseWidget(ngoWorkingPhotos: ngoWorkingPhotos),
             // volunteerText(),
             // VolunterProgramTilesWidget(),
             // eventText(),
@@ -135,11 +151,11 @@ TextStyle aboutNGOTextStyle() {
   );
 }
 
-Widget ngoNameText() {
+Widget ngoNameText(String? ngoName) {
   return Container(
     alignment: Alignment.center,
     child: Text(
-      "Udhaar Foundation",
+      ngoName.toString(),
       style: ngoNameTextStyle(),
       textAlign: TextAlign.center,
     ),
@@ -154,11 +170,11 @@ TextStyle ngoNameTextStyle() {
   );
 }
 
-Widget rating() {
+Widget rating(String? ngoRating) {
   return Container(
     alignment: Alignment.center,
     child: Text(
-      "4.3 ⭐️",
+      "${ngoRating.toString()} ⭐️",
       style: ngoRatingTextStyle(),
       textAlign: TextAlign.center,
     ),
@@ -173,11 +189,11 @@ TextStyle ngoRatingTextStyle() {
   );
 }
 
-Widget ngoCause() {
+Widget ngoCause(String? ngoCauses) {
   return Container(
     alignment: Alignment.center,
     child: Text(
-      "Child Education, Women Empowerment",
+      ngoCauses.toString(),
       style: ngoCauseTextStyle(),
       textAlign: TextAlign.center,
     ),

@@ -1,20 +1,22 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 
 class NGOModel {
   String? ngoName;
-  String? ngoDateofReg;
+  String? ngoRating;
   String? ngoCity;
   String? ngoState;
   String? ngoBio;
   String? ngoCauses;
   String? ngoOperationalArea;
   String? ngoLogoPhoto;
-  String? ngoWorkingPhotos;
-  String? ngoTeamPhotos;
-  String? ngoWorkingPhotoD;
+  List<String>? ngoWorkingPhotos;
+  List<String>? ngoTeamPhotos;
   NGOModel({
     this.ngoName,
-    this.ngoDateofReg,
+    this.ngoRating,
     this.ngoCity,
     this.ngoState,
     this.ngoBio,
@@ -23,25 +25,23 @@ class NGOModel {
     this.ngoLogoPhoto,
     this.ngoWorkingPhotos,
     this.ngoTeamPhotos,
-    this.ngoWorkingPhotoD,
   });
 
   NGOModel copyWith({
     String? ngoName,
-    String? ngoDateofReg,
+    String? ngoRating,
     String? ngoCity,
     String? ngoState,
     String? ngoBio,
     String? ngoCauses,
     String? ngoOperationalArea,
     String? ngoLogoPhoto,
-    String? ngoWorkingPhotos,
-    String? ngoTeamPhotos,
-    String? ngoWorkingPhotoD,
+    List<String>? ngoWorkingPhotos,
+    List<String>? ngoTeamPhotos,
   }) {
     return NGOModel(
       ngoName: ngoName ?? this.ngoName,
-      ngoDateofReg: ngoDateofReg ?? this.ngoDateofReg,
+      ngoRating: ngoRating ?? this.ngoRating,
       ngoCity: ngoCity ?? this.ngoCity,
       ngoState: ngoState ?? this.ngoState,
       ngoBio: ngoBio ?? this.ngoBio,
@@ -50,14 +50,13 @@ class NGOModel {
       ngoLogoPhoto: ngoLogoPhoto ?? this.ngoLogoPhoto,
       ngoWorkingPhotos: ngoWorkingPhotos ?? this.ngoWorkingPhotos,
       ngoTeamPhotos: ngoTeamPhotos ?? this.ngoTeamPhotos,
-      ngoWorkingPhotoD: ngoWorkingPhotoD ?? this.ngoWorkingPhotoD,
     );
   }
 
   Map<String, dynamic> toMap() {
-    return {
+    return <String, dynamic>{
       'ngoName': ngoName,
-      'ngoDateofReg': ngoDateofReg,
+      'ngoRating': ngoRating,
       'ngoCity': ngoCity,
       'ngoState': ngoState,
       'ngoBio': ngoBio,
@@ -66,58 +65,60 @@ class NGOModel {
       'ngoLogoPhoto': ngoLogoPhoto,
       'ngoWorkingPhotos': ngoWorkingPhotos,
       'ngoTeamPhotos': ngoTeamPhotos,
-      'ngoWorkingPhotoD': ngoWorkingPhotoD,
     };
   }
 
   factory NGOModel.fromMap(Map<String, dynamic> map) {
     return NGOModel(
-      ngoName: map['ngoName'],
-      ngoDateofReg: map['ngoDateofReg'],
-      ngoCity: map['ngoCity'],
-      ngoState: map['ngoState'],
-      ngoBio: map['ngoBio'],
-      ngoCauses: map['ngoCauses'],
-      ngoOperationalArea: map['ngoOperationalArea'],
-      ngoLogoPhoto: map['ngoLogoPhoto'],
-      ngoWorkingPhotos: map['ngoWorkingPhotos'],
-      ngoTeamPhotos: map['ngoTeamPhotos'],
-      ngoWorkingPhotoD: map['ngoWorkingPhotoD'],
-    );
+        ngoName: map['ngoName'] != null ? map['ngoName'] as String : null,
+        ngoRating: map['ngoRating'] != null ? map['ngoRating'] as String : null,
+        ngoCity: map['ngoCity'] != null ? map['ngoCity'] as String : null,
+        ngoState: map['ngoState'] != null ? map['ngoState'] as String : null,
+        ngoBio: map['ngoBio'] != null ? map['ngoBio'] as String : null,
+        ngoCauses: map['ngoCauses'] != null ? map['ngoCauses'] as String : null,
+        ngoOperationalArea: map['ngoOperationalArea'] != null
+            ? map['ngoOperationalArea'] as String
+            : null,
+        ngoLogoPhoto:
+            map['ngoLogoPhoto'] != null ? map['ngoLogoPhoto'] as String : null,
+        ngoWorkingPhotos: map['ngoWorkingPhotos'] != null
+            ? List<String>.from((map['ngoWorkingPhotos'] as List<String>))
+            : null,
+        ngoTeamPhotos: map['ngoTeamPhotos'] != null
+            ? List<String>.from((map['ngoTeamPhotos'] as List<String>))
+            : null);
   }
 
   String toJson() => json.encode(toMap());
 
   factory NGOModel.fromJson(String source) =>
-      NGOModel.fromMap(json.decode(source));
+      NGOModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'NGOModel(ngoName: $ngoName, ngoDateofReg: $ngoDateofReg, ngoCity: $ngoCity, ngoState: $ngoState, ngoBio: $ngoBio, ngoCauses: $ngoCauses, ngoOperationalArea: $ngoOperationalArea, ngoLogoPhoto: $ngoLogoPhoto, ngoWorkingPhotos: $ngoWorkingPhotos, ngoTeamPhotos: $ngoTeamPhotos, ngoWorkingPhotoD: $ngoWorkingPhotoD)';
+    return 'NGOModel(ngoName: $ngoName, ngoRating: $ngoRating, ngoCity: $ngoCity, ngoState: $ngoState, ngoBio: $ngoBio, ngoCauses: $ngoCauses, ngoOperationalArea: $ngoOperationalArea, ngoLogoPhoto: $ngoLogoPhoto, ngoWorkingPhotos: $ngoWorkingPhotos, ngoTeamPhotos: $ngoTeamPhotos)';
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(covariant NGOModel other) {
     if (identical(this, other)) return true;
 
-    return other is NGOModel &&
-        other.ngoName == ngoName &&
-        other.ngoDateofReg == ngoDateofReg &&
+    return other.ngoName == ngoName &&
+        other.ngoRating == ngoRating &&
         other.ngoCity == ngoCity &&
         other.ngoState == ngoState &&
         other.ngoBio == ngoBio &&
         other.ngoCauses == ngoCauses &&
         other.ngoOperationalArea == ngoOperationalArea &&
         other.ngoLogoPhoto == ngoLogoPhoto &&
-        other.ngoWorkingPhotos == ngoWorkingPhotos &&
-        other.ngoTeamPhotos == ngoTeamPhotos &&
-        other.ngoWorkingPhotoD == ngoWorkingPhotoD;
+        listEquals(other.ngoWorkingPhotos, ngoWorkingPhotos) &&
+        listEquals(other.ngoTeamPhotos, ngoTeamPhotos);
   }
 
   @override
   int get hashCode {
     return ngoName.hashCode ^
-        ngoDateofReg.hashCode ^
+        ngoRating.hashCode ^
         ngoCity.hashCode ^
         ngoState.hashCode ^
         ngoBio.hashCode ^
@@ -125,7 +126,6 @@ class NGOModel {
         ngoOperationalArea.hashCode ^
         ngoLogoPhoto.hashCode ^
         ngoWorkingPhotos.hashCode ^
-        ngoTeamPhotos.hashCode ^
-        ngoWorkingPhotoD.hashCode;
+        ngoTeamPhotos.hashCode;
   }
 }
