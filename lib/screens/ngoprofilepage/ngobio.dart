@@ -130,12 +130,12 @@ class NGOCauseTexts extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.fromLTRB(10, 8, 10, 8),
-      child: ngoCauseText(cause),
+      child: ngoCauseText(cause, context),
     );
   }
 }
 
-Widget ngoCauseText(String? cause) {
+Widget ngoCauseText(String? cause, BuildContext context) {
   return Text(
     cause!,
     textScaleFactor: 1.1,
@@ -153,8 +153,12 @@ class NGOBioTexts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(20, 8, 20, 8),
-      width: MediaQuery.of(context).size.width * 0.9,
+      margin: EdgeInsets.fromLTRB(
+        MediaQuery.of(context).size.width * 0.05,
+        MediaQuery.of(context).size.height * 0.01,
+        MediaQuery.of(context).size.width * 0.05,
+        MediaQuery.of(context).size.height * 0.01,
+      ),
       child: ngoBioText(ngoBio),
     );
   }

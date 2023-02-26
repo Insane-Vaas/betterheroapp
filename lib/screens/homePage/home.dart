@@ -146,22 +146,24 @@ class AppBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverAppBar(
-      elevation: 0,
-      title: title(location, name, context),
-      backgroundColor: Colors.grey.shade100,
-      actions: [
-        ProfilePic(
-          profilePic: profilePic,
-          name: name,
+    return Container(
+      child: SliverAppBar(
+        elevation: 0,
+        title: title(location, name, context),
+        backgroundColor: Colors.grey.shade100,
+        actions: [
+          ProfilePic(
+            profilePic: profilePic,
+            name: name,
+          ),
+        ],
+        pinned: true,
+        floating: true,
+        centerTitle: false,
+        expandedHeight: MediaQuery.of(context).size.height * 0.18,
+        bottom: searchAndSortArea(
+          context,
         ),
-      ],
-      pinned: true,
-      floating: true,
-      centerTitle: false,
-      expandedHeight: MediaQuery.of(context).size.height * 0.16,
-      bottom: searchAndSortArea(
-        context,
       ),
     );
   }
@@ -189,7 +191,10 @@ class ProfilePic extends StatelessWidget {
               tag: 'profilepicture',
               child: Container(
                 margin: EdgeInsets.fromLTRB(
-                    0, 0, MediaQuery.of(context).size.width * 0.01, 0),
+                    0,
+                    MediaQuery.of(context).size.width * 0.04,
+                    MediaQuery.of(context).size.width * 0.00,
+                    MediaQuery.of(context).size.width * 0.01),
                 width: MediaQuery.of(context).size.width * 0.18,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
@@ -203,7 +208,10 @@ class ProfilePic extends StatelessWidget {
               tag: 'profilepicture',
               child: Container(
                 margin: EdgeInsets.fromLTRB(
-                    0, 0, MediaQuery.of(context).size.width * 0.01, 0),
+                    0,
+                    MediaQuery.of(context).size.width * 0.04,
+                    MediaQuery.of(context).size.width * 0.00,
+                    MediaQuery.of(context).size.width * 0.01),
                 width: MediaQuery.of(context).size.width * 0.18,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
@@ -221,8 +229,8 @@ class ProfilePic extends StatelessWidget {
 
 Widget title(String location, String name, BuildContext context) {
   return Container(
-    margin:
-        EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.015, 0, 0, 0),
+    margin: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.015,
+        MediaQuery.of(context).size.height * 0.015, 0, 0),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -279,8 +287,9 @@ class SearchArea extends StatelessWidget {
         },
         child: Center(
           child: Container(
-            margin: const EdgeInsets.all(4),
-            height: MediaQuery.of(context).size.height * 0.0512,
+            margin: EdgeInsets.fromLTRB(
+                0, MediaQuery.of(context).size.height * 0.013, 0, 0),
+            height: MediaQuery.of(context).size.height * 0.05,
             width: MediaQuery.of(context).size.width * 0.9,
             padding: EdgeInsets.all(5),
             decoration: BoxDecoration(

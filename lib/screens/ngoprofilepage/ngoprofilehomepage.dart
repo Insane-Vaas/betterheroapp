@@ -61,13 +61,12 @@ class NGOProfileHomePage extends StatelessWidget {
           iconTheme: IconThemeData(
             color: Colors.black,
           ),
-          centerTitle: true,
           title: Text(
             ngoName.toString(),
             style: TextStyle(
               color: Colors.black,
-              fontSize: 25,
-              fontWeight: FontWeight.w600,
+              fontSize: 20,
+              fontWeight: FontWeight.w400,
             ),
           ),
           actions: [
@@ -94,14 +93,14 @@ class NGOProfileHomePage extends StatelessWidget {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.07,
             ),
-            ngoNameText(ngoName),
+            ngoNameText(ngoName, context),
             rating(ngoRating),
-            ngoCause(ngoCauses),
+            ngoCause(ngoCauses, context),
             NGOBioTexts(ngoBio: ngoBio),
             // aboutNGOText(),
             CauseWidget(ngoWorkingPhotos: ngoWorkingPhotos),
             SizedBox(
-              height: 80,
+              height: MediaQuery.of(context).size.height * 0.1,
             ),
             // volunteerText(),
             // VolunterProgramTilesWidget(),
@@ -152,9 +151,15 @@ TextStyle aboutNGOTextStyle() {
   );
 }
 
-Widget ngoNameText(String? ngoName) {
+Widget ngoNameText(String? ngoName, BuildContext context) {
   return Container(
     alignment: Alignment.center,
+    margin: EdgeInsets.fromLTRB(
+      MediaQuery.of(context).size.width * 0.08,
+      MediaQuery.of(context).size.height * 0.01,
+      MediaQuery.of(context).size.width * 0.08,
+      MediaQuery.of(context).size.height * 0.01,
+    ),
     child: Text(
       ngoName.toString(),
       style: ngoNameTextStyle(),
@@ -185,26 +190,32 @@ Widget rating(String? ngoRating) {
 TextStyle ngoRatingTextStyle() {
   return TextStyle(
     color: Colors.black,
-    fontSize: 21,
+    fontSize: 15,
     fontWeight: FontWeight.w400,
   );
 }
 
-Widget ngoCause(String? ngoCauses) {
+Widget ngoCause(String? ngoCauses, BuildContext context) {
   return Container(
+    margin: EdgeInsets.fromLTRB(
+      MediaQuery.of(context).size.width * 0.05,
+      MediaQuery.of(context).size.height * 0.01,
+      MediaQuery.of(context).size.width * 0.05,
+      MediaQuery.of(context).size.height * 0.01,
+    ),
     alignment: Alignment.center,
     child: Text(
       ngoCauses.toString(),
       style: ngoCauseTextStyle(),
-      textAlign: TextAlign.center,
+      textAlign: TextAlign.left,
     ),
   );
 }
 
 TextStyle ngoCauseTextStyle() {
   return TextStyle(
-    color: Colors.black,
-    fontSize: 19,
-    fontWeight: FontWeight.w400,
+    color: Colors.grey.shade800,
+    fontSize: 14,
+    fontWeight: FontWeight.bold,
   );
 }
