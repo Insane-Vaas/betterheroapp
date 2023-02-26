@@ -60,17 +60,16 @@ class _LoginState extends State<Login> {
 
   LoginTheme loginTheme() {
     return LoginTheme(
-      primaryColor: Colors.blueGrey.shade300,
-      accentColor: Colors.grey.shade200,
-      titleStyle: TextStyle(
-        color: Colors.orange.shade400,
-      ),
+      primaryColor: Colors.grey.shade100,
+      accentColor: Colors.orange.shade400,
+      titleStyle:
+          TextStyle(color: Colors.orange.shade400, fontWeight: FontWeight.w500),
       buttonStyle: TextStyle(
-        color: Colors.black,
+        color: Colors.white,
         fontSize: 20,
       ),
-      buttonTheme:
-          LoginButtonTheme(backgroundColor: Colors.white, elevation: 10),
+      buttonTheme: LoginButtonTheme(
+          backgroundColor: Colors.orange.shade400, elevation: 10),
       textFieldStyle: TextStyle(
         color: Colors.black,
       ),
@@ -78,17 +77,17 @@ class _LoginState extends State<Login> {
         color: Colors.black,
       ),
       footerTextStyle: TextStyle(
-        height: 11,
-        fontSize: 22,
-        color: Colors.orange.shade600,
-      ),
+          height: 11,
+          fontSize: 22,
+          color: Colors.orange.shade400,
+          fontWeight: FontWeight.w500),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return FlutterLogin(
-      footer: "One click to save the world.",
+      footer: "One click to save the world!",
       title: "Better Hero",
       loginProviders: [
         LoginProvider(
