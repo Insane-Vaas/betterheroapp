@@ -89,7 +89,7 @@ CustomScrollView customScrollView(
                 ),
               ),
               Text(
-                "Recommend NGOs",
+                "Recommended NGOs",
                 style: TextStyle(
                     color: Colors.black54, fontWeight: FontWeight.w500),
               ),
