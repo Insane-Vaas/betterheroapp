@@ -39,48 +39,46 @@ class _CauseWidgetState extends State<CauseWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          margin: const EdgeInsets.fromLTRB(2, 4, 0, 4),
-          height: MediaQuery.of(context).size.height * 0.4,
-          width: MediaQuery.of(context).size.width * 0.98,
-          child: CarouselSlider(
-            items: widgetList,
-            options: CarouselOptions(
-              autoPlay: false,
-              scrollDirection: Axis.horizontal,
-              reverse: false,
-              aspectRatio: 1.8,
-              viewportFraction: 1,
-              enlargeCenterPage: true,
-              height: MediaQuery.of(context).size.height * .45,
-              onPageChanged: (index, reason) {
-                setState(() {
-                  currentIdx = index;
-                });
-              },
+    return Container(
+      child: Column(
+        children: [
+          Container(
+            child: CarouselSlider(
+              items: widgetList,
+              options: CarouselOptions(
+                autoPlay: false,
+                scrollDirection: Axis.horizontal,
+                reverse: false,
+                viewportFraction: 1,
+                enlargeCenterPage: true,
+                height: MediaQuery.of(context).size.height * .45,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    currentIdx = index;
+                  });
+                },
+              ),
             ),
           ),
-        ),
-        widgetList.length > 0
-            ? Container(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: DotsIndicator(
-                  dotsCount: widgetList.length,
-                  position: currentIdx.toDouble(),
-                  decorator: DotsDecorator(
-                    color: Colors.orange.shade400,
-                    activeColor: Colors.orange.shade800,
-                    size: const Size.square(9.0),
-                    activeSize: const Size(18.0, 9.0),
-                    activeShape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0)),
+          widgetList.length > 0
+              ? Container(
+                  // padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  child: DotsIndicator(
+                    dotsCount: widgetList.length,
+                    position: currentIdx.toDouble(),
+                    decorator: DotsDecorator(
+                      color: Colors.orange.shade400,
+                      activeColor: Colors.orange.shade800,
+                      size: const Size.square(9.0),
+                      activeSize: const Size(18.0, 9.0),
+                      activeShape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0)),
+                    ),
                   ),
-                ),
-              )
-            : SizedBox(),
-      ],
+                )
+              : SizedBox(),
+        ],
+      ),
     );
   }
 }
@@ -89,13 +87,19 @@ ListView ngoStoriesWidget(String? img, String? cause) {
   return ListView(
     shrinkWrap: true,
     physics: NeverScrollableScrollPhysics(),
-    children: [
-      NGOPhotoAreaForCause(img: img),
-      NGOCauseTexts(
-        cause: cause,
-      ),
-    ],
+    children: createNgoStoriesWidgetChildren(img, cause),
   );
+}
+
+List<Widget> createNgoStoriesWidgetChildren(String? img, String? cause) {
+  var retVal = new List<Widget>.empty(growable: true);
+  if (img!.isNotEmpty) {
+    retVal.add(NGOPhotoAreaForCause(img: img));
+  }
+  if (cause!.isNotEmpty) {
+    retVal.add(NGOCauseTexts(cause: cause));
+  }
+  return retVal;
 }
 
 class NGOPhotoAreaForCause extends StatelessWidget {
@@ -105,7 +109,7 @@ class NGOPhotoAreaForCause extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.3,
+      height: MediaQuery.of(context).size.height * .45,
       width: MediaQuery.of(context).size.width * 0.98,
       margin: const EdgeInsets.fromLTRB(10, 4, 10, 4),
       child: ngoCausePhoto(img),

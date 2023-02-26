@@ -136,7 +136,6 @@ Container ngoTileBackImageAndLike(double height, List<dynamic>? imgList) {
         PageView.builder(
           itemCount: imgList!.length,
           reverse: false,
-          physics: BouncingScrollPhysics(),
           controller: _pageController,
           itemBuilder: (context, index) {
             return ClipRRect(
