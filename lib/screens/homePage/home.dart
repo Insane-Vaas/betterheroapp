@@ -312,23 +312,33 @@ class SearchArea extends StatelessWidget {
                 margin: EdgeInsets.fromLTRB(4, 0, 0, 0),
                 alignment: Alignment.centerLeft,
                 height: MediaQuery.of(context).size.height * 0.0512,
-                // width: 30.w,
-                child: AnimatedTextKit(
-                  animatedTexts: [
-                    FadeAnimatedText('Search for NGOs...',
-                        duration: const Duration(seconds: 4),
-                        textStyle: TextStyle(color: Colors.grey.shade800)),
-                    FadeAnimatedText('Search for Causes...',
-                        duration: const Duration(seconds: 4),
-                        textStyle: TextStyle(color: Colors.grey.shade800)),
-                    FadeAnimatedText('Search for Heroes...',
-                        duration: const Duration(seconds: 4),
-                        textStyle: TextStyle(color: Colors.grey.shade800)),
+                width: 34.w,
+                child: Row(
+                  children: <Widget>[
+                    const Text(
+                      'Search for ',
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                    AnimatedTextKit(
+                      animatedTexts: [
+                        TypewriterAnimatedText('NGOs...',
+                            speed: Duration(milliseconds: 90),
+                            textStyle: TextStyle(color: Colors.grey.shade800)),
+                        TypewriterAnimatedText('causes...',
+                            speed: Duration(milliseconds: 90),
+                            textStyle: TextStyle(color: Colors.grey.shade800)),
+                        TypewriterAnimatedText('heroes...',
+                            speed: Duration(milliseconds: 90),
+                            textStyle: TextStyle(color: Colors.grey.shade800)),
+                      ],
+                      onTap: () {
+                        context.pushNamed('searchpage');
+                      },
+                      repeatForever: true,
+                    ),
                   ],
-                  onTap: () {
-                    context.pushNamed('searchpage');
-                  },
-                  repeatForever: true,
                 ),
               ),
             ],
