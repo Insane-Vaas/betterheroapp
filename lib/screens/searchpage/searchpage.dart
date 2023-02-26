@@ -37,7 +37,7 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey.shade100,
       body: ListView(
         shrinkWrap: true,
         scrollDirection: Axis.vertical,

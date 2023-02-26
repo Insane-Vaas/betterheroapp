@@ -6,7 +6,7 @@ class PhoneLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey.shade100,
       body: ListView(
         children: [
           Text("Enter your Phone Number to get OTP"),

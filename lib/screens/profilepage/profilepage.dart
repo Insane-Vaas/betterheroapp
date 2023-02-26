@@ -40,7 +40,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
         //     ),
         //   ),
         // ),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.grey.shade100,
         appBar: AppBar(
           iconTheme: IconThemeData(
             color: Colors.black,

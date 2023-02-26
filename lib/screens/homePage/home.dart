@@ -58,14 +58,14 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: customScrollView(location, name, profilePic),
+      backgroundColor: Colors.grey.shade100,
+      body: customScrollView(location, name, profilePic, context),
     );
   }
 }
 
 CustomScrollView customScrollView(
-    String location, String name, String profilePic) {
+    String location, String name, String profilePic, BuildContext context) {
   return CustomScrollView(
     physics: const ClampingScrollPhysics(),
     slivers: [
@@ -83,9 +83,10 @@ CustomScrollView customScrollView(
           child: Row(
             children: [
               SizedBox(
-                width: 100,
+                width: MediaQuery.of(context).size.width * 0.20,
                 child: Divider(
-                  color: Colors.black26,
+                  color: Colors.orange.shade400,
+                  thickness: MediaQuery.of(context).size.width * 0.002,
                 ),
               ),
               Text(
@@ -94,9 +95,10 @@ CustomScrollView customScrollView(
                     color: Colors.black54, fontWeight: FontWeight.w500),
               ),
               SizedBox(
-                width: 100,
+                width: MediaQuery.of(context).size.width * 0.20,
                 child: Divider(
-                  color: Colors.black26,
+                  thickness: MediaQuery.of(context).size.width * 0.002,
+                  color: Colors.orange.shade400,
                 ),
               ),
             ],
@@ -146,8 +148,8 @@ class AppBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       elevation: 0,
-      title: title(location, name),
-      backgroundColor: Colors.white,
+      title: title(location, name, context),
+      backgroundColor: Colors.grey.shade100,
       actions: [
         ProfilePic(
           profilePic: profilePic,
@@ -186,6 +188,8 @@ class ProfilePic extends StatelessWidget {
           ? Hero(
               tag: 'profilepicture',
               child: Container(
+                margin: EdgeInsets.fromLTRB(
+                    0, 0, MediaQuery.of(context).size.width * 0.01, 0),
                 width: MediaQuery.of(context).size.width * 0.18,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
@@ -198,6 +202,8 @@ class ProfilePic extends StatelessWidget {
           : Hero(
               tag: 'profilepicture',
               child: Container(
+                margin: EdgeInsets.fromLTRB(
+                    0, 0, MediaQuery.of(context).size.width * 0.01, 0),
                 width: MediaQuery.of(context).size.width * 0.18,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
@@ -213,26 +219,30 @@ class ProfilePic extends StatelessWidget {
   }
 }
 
-Widget title(String location, String name) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Text(
-        name != "" ? "Hi, $name" : "Hi, Guest",
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 17,
+Widget title(String location, String name, BuildContext context) {
+  return Container(
+    margin:
+        EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.015, 0, 0, 0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          name != "" ? "Hi, $name" : "Hi, Guest",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 17,
+          ),
+          textScaleFactor: 1,
         ),
-        textScaleFactor: 1,
-      ),
-      Text(
-        style: TextStyle(
-          color: Colors.grey.shade700,
-          fontSize: 15,
+        Text(
+          style: TextStyle(
+            color: Colors.grey.shade700,
+            fontSize: 15,
+          ),
+          location,
         ),
-        location,
-      ),
-    ],
+      ],
+    ),
   );
 }
 
@@ -241,7 +251,7 @@ PreferredSize searchAndSortArea(double height) {
     preferredSize: Size.fromHeight(height * 0.1211),
     child: Container(
       margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-      color: Colors.white,
+      color: Colors.grey.shade100,
       child: ListView(
         shrinkWrap: true,
         physics: ClampingScrollPhysics(),
@@ -268,42 +278,44 @@ class SearchArea extends StatelessWidget {
         onTap: () {
           context.pushNamed('searchpage');
         },
-        child: Container(
-          margin: const EdgeInsets.all(4),
-          height: MediaQuery.of(context).size.height * 0.0512,
-          width: 400,
-          padding: EdgeInsets.all(5),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(
-                25,
-              ),
-              border: Border.all(
-                color: Colors.green.shade400,
-                width: 2,
-              )),
-          alignment: Alignment.centerLeft,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.search,
-                color: Colors.green.shade500,
-                size: 25,
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(4, 0, 0, 0),
-                alignment: Alignment.centerLeft,
-                height: MediaQuery.of(context).size.height * 0.0512,
-                width: 300,
-                child: Text(
-                  "Search",
-                  style: TextStyle(
-                    color: Colors.grey.shade600.withOpacity(0.9),
-                    fontSize: 23,
+        child: Center(
+          child: Container(
+            margin: const EdgeInsets.all(4),
+            height: MediaQuery.of(context).size.height * 0.0512,
+            width: MediaQuery.of(context).size.width * 0.9,
+            padding: EdgeInsets.all(5),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(
+                  25,
+                ),
+                border: Border.all(
+                  color: Colors.orange.shade400,
+                  width: 2,
+                )),
+            alignment: Alignment.centerLeft,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.search,
+                  color: Colors.orange.shade400,
+                  size: 25,
+                ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(4, 0, 0, 0),
+                  alignment: Alignment.centerLeft,
+                  height: MediaQuery.of(context).size.height * 0.0512,
+                  width: 300,
+                  child: Text(
+                    "Search",
+                    style: TextStyle(
+                      color: Colors.grey.shade600.withOpacity(0.9),
+                      fontSize: 23,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
 
           //TextField(

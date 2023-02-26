@@ -22,7 +22,7 @@ class SortingAndFilterWidget extends StatelessWidget {
                 print("Something");
               },
               child: Chip(
-                backgroundColor: Color.fromARGB(255, 3, 171, 70),
+                backgroundColor: Colors.orange.shade400,
                 label: Text(
                   "${listString[idx]}",
                   style: sortingTextStyle(),

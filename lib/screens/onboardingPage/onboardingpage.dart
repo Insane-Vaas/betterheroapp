@@ -22,6 +22,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
+      backgroundColor: Colors.grey.shade100,
       body: ListView(
         padding: const EdgeInsets.all(8),
         shrinkWrap: true,

@@ -48,7 +48,7 @@ class _NewUserOnBoardingPageState extends State<NewUserOnBoardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,

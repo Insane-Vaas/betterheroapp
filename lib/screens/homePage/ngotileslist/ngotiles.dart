@@ -99,8 +99,11 @@ class _NGOTileWidgetState extends State<NGOTileWidget> {
       },
       child: Container(
         decoration: ngoTileWidgetDecoration(),
-        margin: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.02,
-            15, MediaQuery.of(context).size.width * 0.02, 15),
+        margin: EdgeInsets.fromLTRB(
+            MediaQuery.of(context).size.width * 0.033,
+            MediaQuery.of(context).size.height * 0.01,
+            MediaQuery.of(context).size.width * 0.033,
+            MediaQuery.of(context).size.height * 0.01),
         height: MediaQuery.of(context).size.height * 0.31,
         width: MediaQuery.of(context).size.width * 0.9,
         child: Column(
@@ -108,11 +111,11 @@ class _NGOTileWidgetState extends State<NGOTileWidget> {
             ngoTileBackImageAndLike(
                 MediaQuery.of(context).size.height * 0.23, widget.imgList),
             ngoNameCauseAndRating(
-              widget.ngoName,
-              widget.ngoCauses,
-              widget.ngoRating,
-              MediaQuery.of(context).size.width * 0.9,
-            ),
+                widget.ngoName,
+                widget.ngoCauses,
+                widget.ngoRating,
+                MediaQuery.of(context).size.width * 0.9,
+                context),
           ],
         ),
       ),
@@ -226,27 +229,22 @@ BoxDecoration ngoTileWidgetDecoration() {
       color: Colors.grey.shade200);
 }
 
-Container ngoNameCauseAndRating(
-    String? ngoName, String? ngoCause, String? ngorating, double width) {
+Container ngoNameCauseAndRating(String? ngoName, String? ngoCause,
+    String? ngorating, double width, BuildContext context) {
   return Container(
-    width: width,
     child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ngoNameCause(
-          ngoName,
-          ngoCause,
-        ),
+        Expanded(child: ngoNameCause(ngoName, ngoCause, context)),
         ngoRating(ngorating),
       ],
     ),
   );
 }
 
-Container ngoNameCause(String? ngoName, String? ngoCause) {
+Container ngoNameCause(
+    String? ngoName, String? ngoCause, BuildContext context) {
   return Container(
-    width: 220,
+    // width: 220,
     margin: EdgeInsets.fromLTRB(8, 4, 0, 4),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -271,7 +269,7 @@ TextStyle ngoNameTextStyle() {
   return TextStyle(
     color: Colors.black,
     fontWeight: FontWeight.w600,
-    fontSize: 21,
+    fontSize: 18,
   );
 }
 
@@ -279,14 +277,14 @@ TextStyle ngoCauseTextStyle() {
   return TextStyle(
     color: Colors.grey.shade600,
     fontWeight: FontWeight.w400,
-    fontSize: 16,
+    fontSize: 12,
   );
 }
 
 Container ngoRating(String? ngorating) {
   return Container(
     decoration: BoxDecoration(
-      color: Colors.green,
+      color: Colors.orange.shade400,
       borderRadius: BorderRadius.circular(20),
     ),
     margin: EdgeInsets.fromLTRB(8, 4, 10, 4),

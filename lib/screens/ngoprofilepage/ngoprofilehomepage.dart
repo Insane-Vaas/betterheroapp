@@ -40,7 +40,7 @@ class NGOProfileHomePage extends StatelessWidget {
           alignment: Alignment.bottomCenter,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.green,
+              backgroundColor: Colors.orange.shade400,
               fixedSize: Size(150, 50),
               shape: StadiumBorder(),
             ),
@@ -56,7 +56,7 @@ class NGOProfileHomePage extends StatelessWidget {
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.grey.shade100,
         appBar: AppBar(
           iconTheme: IconThemeData(
             color: Colors.black,
@@ -84,7 +84,7 @@ class NGOProfileHomePage extends StatelessWidget {
                   color: Colors.black,
                 ))
           ],
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.grey.shade100,
           elevation: 0,
         ),
         body: ListView(
@@ -98,7 +98,7 @@ class NGOProfileHomePage extends StatelessWidget {
             rating(ngoRating),
             ngoCause(ngoCauses),
             NGOBioTexts(ngoBio: ngoBio),
-            aboutNGOText(),
+            // aboutNGOText(),
             CauseWidget(ngoWorkingPhotos: ngoWorkingPhotos),
             SizedBox(
               height: 80,

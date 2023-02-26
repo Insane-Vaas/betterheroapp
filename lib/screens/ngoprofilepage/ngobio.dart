@@ -70,8 +70,8 @@ class _CauseWidgetState extends State<CauseWidget> {
                   dotsCount: widgetList.length,
                   position: currentIdx.toDouble(),
                   decorator: DotsDecorator(
-                    color: Colors.grey,
-                    activeColor: Colors.black,
+                    color: Colors.orange.shade400,
+                    activeColor: Colors.orange.shade800,
                     size: const Size.square(9.0),
                     activeSize: const Size(18.0, 9.0),
                     activeShape: RoundedRectangleBorder(
