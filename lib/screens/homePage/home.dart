@@ -7,6 +7,7 @@ import 'package:betterheroapp/screens/homePage/donationicontile/donationiconwidg
 import 'package:betterheroapp/screens/homePage/ngotileslist/ngotiles.dart';
 import 'package:betterheroapp/screens/homePage/sortwidget/sortwidget.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -74,6 +75,36 @@ CustomScrollView customScrollView(
         location: location,
         name: name,
         profilePic: profilePic,
+      ),
+      SliverToBoxAdapter(
+        child: Container(
+          margin: EdgeInsets.fromLTRB(0, 1.h, 0, 0),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 31.w,
+                child: Divider(
+                  color: Colors.orange.shade400,
+                  thickness: 0.2.h,
+                ),
+              ),
+              Text(
+                "Causes",
+                style: TextStyle(
+                    color: Colors.black54, fontWeight: FontWeight.w500),
+              ),
+              SizedBox(
+                width: 31.w,
+                child: Divider(
+                  thickness: 0.2.h,
+                  color: Colors.orange.shade400,
+                ),
+              ),
+            ],
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          ),
+          // ),
+        ),
       ),
       SliverToBoxAdapter(
         child: DonationIconWidget(),
@@ -152,18 +183,15 @@ class AppBarWidget extends StatelessWidget {
       title: title(location, name, context),
       backgroundColor: Colors.grey.shade100,
       actions: [
+        SearchArea(),
         ProfilePic(
           profilePic: profilePic,
           name: name,
         ),
       ],
-      pinned: true,
+      pinned: false,
       floating: true,
       centerTitle: false,
-      expandedHeight: 18.h,
-      bottom: searchAndSortArea(
-        context,
-      ),
     );
   }
 }
@@ -244,23 +272,6 @@ Widget title(String location, String name, BuildContext context) {
   );
 }
 
-PreferredSize searchAndSortArea(BuildContext context) {
-  return PreferredSize(
-    preferredSize: Size.fromHeight(9.h),
-    child: Container(
-      color: Colors.grey.shade100,
-      child: ListView(
-        shrinkWrap: true,
-        physics: ClampingScrollPhysics(),
-        children: [
-          SearchArea(),
-          SortingAndFilterWidget(),
-        ],
-      ),
-    ),
-  );
-}
-
 class SearchArea extends StatelessWidget {
   SearchArea({
     Key? key,
@@ -275,63 +286,53 @@ class SearchArea extends StatelessWidget {
         onTap: () {
           context.pushNamed('searchpage');
         },
-        child: Center(
-          child: Container(
-            margin: EdgeInsets.fromLTRB(0, 1.3.h, 0, 0),
-            height: 5.h,
-            width: 90.w,
-            padding: EdgeInsets.all(5),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                  25,
+        child: Container(
+          margin: EdgeInsets.fromLTRB(0, 1.3.h, 0, 0),
+          height: 3.h,
+          width: 50.w,
+          padding: EdgeInsets.all(5),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(
+                25,
+              ),
+              border: Border.all(
+                color: Colors.orange.shade400,
+                width: 0.1.h,
+              )),
+          alignment: Alignment.centerLeft,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.search,
+                color: Colors.orange.shade400,
+                size: 25,
+              ),
+              Container(
+                margin: EdgeInsets.fromLTRB(4, 0, 0, 0),
+                alignment: Alignment.centerLeft,
+                height: MediaQuery.of(context).size.height * 0.0512,
+                // width: 30.w,
+                child: AnimatedTextKit(
+                  animatedTexts: [
+                    FadeAnimatedText('Search for NGOs...',
+                        duration: const Duration(seconds: 4),
+                        textStyle: TextStyle(color: Colors.grey.shade800)),
+                    FadeAnimatedText('Search for Causes...',
+                        duration: const Duration(seconds: 4),
+                        textStyle: TextStyle(color: Colors.grey.shade800)),
+                    FadeAnimatedText('Search for Heroes...',
+                        duration: const Duration(seconds: 4),
+                        textStyle: TextStyle(color: Colors.grey.shade800)),
+                  ],
+                  onTap: () {
+                    context.pushNamed('searchpage');
+                  },
+                  repeatForever: true,
                 ),
-                border: Border.all(
-                  color: Colors.orange.shade400,
-                  width: 2,
-                )),
-            alignment: Alignment.centerLeft,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.search,
-                  color: Colors.orange.shade400,
-                  size: 25,
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(4, 0, 0, 0),
-                  alignment: Alignment.centerLeft,
-                  height: MediaQuery.of(context).size.height * 0.0512,
-                  width: 70.w,
-                  child: Text(
-                    "Search",
-                    style: TextStyle(
-                      color: Colors.grey.shade600.withOpacity(0.9),
-                      fontSize: 15.dp,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-
-          //TextField(
-          //   controller: _textEditingController,
-          //   cursorHeight: 25,
-          //   style: TextStyle(
-          //     fontSize: 25,
-          //     height: 1.0,
-          //     color: Colors.grey.shade800.withOpacity(0.85),
-          //   ),
-          //   decoration: InputDecoration(
-          //     prefixIcon: IconButton(
-          //       onPressed: () {},
-          //       icon: const Icon(Icons.search),
-          //     ),
-          //     enabledBorder: enabledBorder(),
-          //     focusedBorder: focusedBorder(),
-          //   ),
-          // ),
         ),
       ),
     );
