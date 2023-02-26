@@ -78,6 +78,34 @@ CustomScrollView customScrollView(
         child: DonationIconWidget(),
       ),
       SliverToBoxAdapter(
+        child: Center(
+          // child: Center(
+          child: Row(
+            children: [
+              SizedBox(
+                width: 100,
+                child: Divider(
+                  color: Colors.black26,
+                ),
+              ),
+              Text(
+                "Recommend NGOs",
+                style: TextStyle(
+                    color: Colors.black54, fontWeight: FontWeight.w500),
+              ),
+              SizedBox(
+                width: 100,
+                child: Divider(
+                  color: Colors.black26,
+                ),
+              ),
+            ],
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          ),
+          // ),
+        ),
+      ),
+      SliverToBoxAdapter(
         child: NGOTilesListWidget(),
       ),
     ],
