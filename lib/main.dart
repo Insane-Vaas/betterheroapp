@@ -10,6 +10,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -80,21 +81,21 @@ class _BetterHeroAppState extends State<BetterHeroApp> {
             Provider<AppRouter>(
                 create: (_) => AppRouter(preferences: widget.sharedPreferences))
           ],
-          child: Builder(
-            builder: (context) {
-              final GoRouter goRouter =
-                  Provider.of<AppRouter>(context, listen: false).router;
-              SystemChrome.setSystemUIOverlayStyle(
-                SystemUiOverlayStyle(
-                  statusBarColor: Colors.white,
-                ),
-              );
+          child: Builder(builder: (context) {
+            final GoRouter goRouter =
+                Provider.of<AppRouter>(context, listen: false).router;
+            SystemChrome.setSystemUIOverlayStyle(
+              SystemUiOverlayStyle(
+                statusBarColor: Colors.white,
+              ),
+            );
+            return FlutterSizer(builder: (context, orientation, screenType) {
               return MaterialApp.router(
                 debugShowCheckedModeBanner: false,
                 routerConfig: goRouter,
               );
-            },
-          ),
+            });
+          }),
         ),
       );
 }

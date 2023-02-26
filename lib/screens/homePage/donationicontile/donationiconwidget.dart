@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 class DonationIconWidget extends StatelessWidget {
   const DonationIconWidget({super.key});
@@ -70,8 +71,8 @@ class DonationIconWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                      height: MediaQuery.of(context).size.width * 0.14,
-                      width: MediaQuery.of(context).size.width * 0.14,
+                      height: 14.w,
+                      width: 14.w,
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage(
@@ -86,7 +87,7 @@ class DonationIconWidget extends StatelessWidget {
                     Text(
                       "${listIconTile[index]["causeName"]}",
                       style: TextStyle(
-                        fontSize: 13,
+                        fontSize: 10.dp,
                         fontWeight: FontWeight.w500,
                       ),
                     )
