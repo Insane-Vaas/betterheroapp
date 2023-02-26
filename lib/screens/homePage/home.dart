@@ -161,7 +161,7 @@ class AppBarWidget extends StatelessWidget {
       centerTitle: false,
       expandedHeight: MediaQuery.of(context).size.height * 0.16,
       bottom: searchAndSortArea(
-        MediaQuery.of(context).size.height,
+        context,
       ),
     );
   }
@@ -246,11 +246,10 @@ Widget title(String location, String name, BuildContext context) {
   );
 }
 
-PreferredSize searchAndSortArea(double height) {
+PreferredSize searchAndSortArea(BuildContext context) {
   return PreferredSize(
-    preferredSize: Size.fromHeight(height * 0.1211),
+    preferredSize: Size.fromHeight(MediaQuery.of(context).size.height * 0.12),
     child: Container(
-      margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
       color: Colors.grey.shade100,
       child: ListView(
         shrinkWrap: true,
@@ -271,7 +270,7 @@ class SearchArea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ScrollController controller = ScrollController();
+    // final ScrollController controller = ScrollController();
     return Hero(
       tag: "search",
       child: GestureDetector(

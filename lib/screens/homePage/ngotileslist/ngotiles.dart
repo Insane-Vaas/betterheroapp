@@ -104,18 +104,14 @@ class _NGOTileWidgetState extends State<NGOTileWidget> {
             MediaQuery.of(context).size.height * 0.01,
             MediaQuery.of(context).size.width * 0.033,
             MediaQuery.of(context).size.height * 0.01),
-        height: MediaQuery.of(context).size.height * 0.31,
+        height: MediaQuery.of(context).size.height * 0.3,
         width: MediaQuery.of(context).size.width * 0.9,
         child: Column(
           children: [
             ngoTileBackImageAndLike(
                 MediaQuery.of(context).size.height * 0.23, widget.imgList),
             ngoNameCauseAndRating(
-                widget.ngoName,
-                widget.ngoCauses,
-                widget.ngoRating,
-                MediaQuery.of(context).size.width * 0.9,
-                context),
+                widget.ngoName, widget.ngoCauses, widget.ngoRating, context),
           ],
         ),
       ),
@@ -230,12 +226,12 @@ BoxDecoration ngoTileWidgetDecoration() {
 }
 
 Container ngoNameCauseAndRating(String? ngoName, String? ngoCause,
-    String? ngorating, double width, BuildContext context) {
+    String? ngorating, BuildContext context) {
   return Container(
     child: Row(
       children: [
         Expanded(child: ngoNameCause(ngoName, ngoCause, context)),
-        ngoRating(ngorating),
+        ngoRating(ngorating, context),
       ],
     ),
   );
@@ -244,8 +240,8 @@ Container ngoNameCauseAndRating(String? ngoName, String? ngoCause,
 Container ngoNameCause(
     String? ngoName, String? ngoCause, BuildContext context) {
   return Container(
-    // width: 220,
-    margin: EdgeInsets.fromLTRB(8, 4, 0, 4),
+    margin: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.03,
+        MediaQuery.of(context).size.height * 0.01, 0, 0),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -281,13 +277,14 @@ TextStyle ngoCauseTextStyle() {
   );
 }
 
-Container ngoRating(String? ngorating) {
+Container ngoRating(String? ngorating, BuildContext context) {
   return Container(
     decoration: BoxDecoration(
       color: Colors.orange.shade400,
       borderRadius: BorderRadius.circular(20),
     ),
-    margin: EdgeInsets.fromLTRB(8, 4, 10, 4),
+    margin:
+        EdgeInsets.fromLTRB(0, 0, MediaQuery.of(context).size.width * 0.033, 0),
     padding: EdgeInsets.fromLTRB(8, 2, 8, 2),
     alignment: Alignment.topRight,
     child: Text(

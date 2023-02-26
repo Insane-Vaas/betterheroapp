@@ -43,7 +43,6 @@ class DonationIconWidget extends StatelessWidget {
 
     return Container(
         color: Colors.grey.shade100,
-        margin: EdgeInsets.all(8),
         child: GridView.builder(
           padding: EdgeInsets.zero,
           shrinkWrap: true,
@@ -51,11 +50,11 @@ class DonationIconWidget extends StatelessWidget {
           itemCount: listIconTile.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4,
-            mainAxisSpacing: 15,
           ),
           itemBuilder: (context, index) {
             return Container(
-              margin: EdgeInsets.all(4),
+              margin: EdgeInsets.fromLTRB(
+                  0, MediaQuery.of(context).size.height * 0.005, 0, 0),
               height: MediaQuery.of(context).size.height * 0.01,
               child: GestureDetector(
                 onTap: (() {
@@ -71,8 +70,8 @@ class DonationIconWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                      height: 60,
-                      width: 60,
+                      height: MediaQuery.of(context).size.width * 0.14,
+                      width: MediaQuery.of(context).size.width * 0.14,
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage(
