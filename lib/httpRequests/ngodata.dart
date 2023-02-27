@@ -11,12 +11,7 @@ class GetNGOData {
     try {
       res =
           await _dio.get('http://192.168.1.3:3000/api/ngoPage/getNGO?uid=$uid');
-    } catch (e) {
-      print(e);
-    }
-    final data = await json.decode(res.toString());
-    print(data);
-    try {
+      final data = await json.decode(res.toString());
       return data['ngoData'];
     } catch (e) {
       print(e);
