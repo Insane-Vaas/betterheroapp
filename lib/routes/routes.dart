@@ -85,13 +85,6 @@ class AppRouter {
             builder: (context, state) {
               return NGOProfileHomePage(
                 ngoUID: state.queryParams["ngoUID"],
-                ngoBio: state.queryParams["ngoBio"],
-                ngoCauses: state.queryParams['ngoCauses'],
-                ngoLogoPhoto: state.queryParams['ngoLogoPhoto'],
-                ngoName: state.queryParams['ngoName'],
-                ngoRating: state.queryParams['ngoRating'],
-                ngoTeamPhoto: state.queryParams['ngoTeamPhoto'],
-                ngoWorkingPhotos: state.extra as List<dynamic>,
               );
             },
             routes: [

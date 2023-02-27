@@ -59,9 +59,14 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey.shade100,
-      body: customScrollView(location, name, profilePic, context),
+    return Container(
+      color: Colors.white,
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          body: customScrollView(location, name, profilePic, context),
+        ),
+      ),
     );
   }
 }
@@ -140,7 +145,7 @@ CustomScrollView customScrollView(
         ),
       ),
       SliverToBoxAdapter(
-        child: NGOTilesListWidget(),
+        child: NGOTilesListWidget(location: location),
       ),
     ],
   );
@@ -181,7 +186,7 @@ class AppBarWidget extends StatelessWidget {
     return SliverAppBar(
       elevation: 0,
       title: title(location, name, context),
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: Colors.white,
       actions: [
         SearchArea(),
         ProfilePic(
@@ -272,10 +277,35 @@ Widget title(String location, String name, BuildContext context) {
   );
 }
 
-class SearchArea extends StatelessWidget {
+class SearchArea extends StatefulWidget {
   SearchArea({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<SearchArea> createState() => _SearchAreaState();
+}
+
+class _SearchAreaState extends State<SearchArea> {
+  bool animation = false;
+  searchText() {
+    Future.delayed(
+      Duration(
+        seconds: 2,
+      ),
+      () {
+        setState(() {
+          animation = true;
+        });
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    searchText();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -319,24 +349,33 @@ class SearchArea extends StatelessWidget {
                       'Search for ',
                       style: TextStyle(
                         color: Colors.black,
+                        fontSize: 14,
                       ),
                     ),
-                    AnimatedTextKit(
-                      animatedTexts: [
-                        TypewriterAnimatedText('NGOs...',
+                    Flexible(
+                      child: AnimatedTextKit(
+                        animatedTexts: [
+                          TypewriterAnimatedText(
+                            'NGOs...',
                             speed: Duration(milliseconds: 90),
-                            textStyle: TextStyle(color: Colors.grey.shade800)),
-                        TypewriterAnimatedText('causes...',
+                            textStyle: animationTextStyle(),
+                          ),
+                          TypewriterAnimatedText(
+                            'causes...',
                             speed: Duration(milliseconds: 90),
-                            textStyle: TextStyle(color: Colors.grey.shade800)),
-                        TypewriterAnimatedText('heroes...',
+                            textStyle: animationTextStyle(),
+                          ),
+                          TypewriterAnimatedText(
+                            'heroes...',
                             speed: Duration(milliseconds: 90),
-                            textStyle: TextStyle(color: Colors.grey.shade800)),
-                      ],
-                      onTap: () {
-                        context.pushNamed('searchpage');
-                      },
-                      repeatForever: true,
+                            textStyle: animationTextStyle(),
+                          ),
+                        ],
+                        onTap: () {
+                          context.pushNamed('searchpage');
+                        },
+                        repeatForever: true,
+                      ),
                     ),
                   ],
                 ),
@@ -370,6 +409,13 @@ OutlineInputBorder focusedBorder() {
       color: Colors.green.shade400,
       width: 3,
     ),
+  );
+}
+
+TextStyle animationTextStyle() {
+  return TextStyle(
+    color: Colors.grey.shade800,
+    fontSize: 14,
   );
 }
 

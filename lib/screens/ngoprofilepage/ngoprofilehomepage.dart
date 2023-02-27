@@ -1,3 +1,4 @@
+import 'package:betterheroapp/httprequests/ngodata.dart';
 import 'package:betterheroapp/routes/dynamiclink.dart';
 import 'package:betterheroapp/screens/ngoprofilepage/ngobio.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
@@ -9,106 +10,104 @@ import 'ngobackgroundandprofile.dart';
 
 class NGOProfileHomePage extends StatelessWidget {
   final String? ngoUID;
-  final String? ngoName;
-  final String? ngoCauses;
-  final String? ngoBio;
-  final String? ngoRating;
-  final List<dynamic>? ngoWorkingPhotos;
-  final String? ngoLogoPhoto;
-  final String? ngoTeamPhoto;
 
   const NGOProfileHomePage({
     super.key,
-    this.ngoUID,
-    this.ngoName,
-    this.ngoCauses,
-    this.ngoBio,
-    this.ngoRating,
-    this.ngoWorkingPhotos,
-    this.ngoLogoPhoto,
-    this.ngoTeamPhoto,
+    required this.ngoUID,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: ThemeData().copyWith(
-        dividerColor: Colors.transparent,
-      ),
-      child: Scaffold(
-        floatingActionButton: Container(
-          alignment: Alignment.bottomCenter,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.orange.shade400,
-              fixedSize: Size(150, 50),
-              shape: StadiumBorder(),
+    return FutureBuilder(
+      future: GetNGOData().getNGOData(ngoUID.toString()),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Container(
+            height: 200,
+            child: Center(
+              child: CircularProgressIndicator(),
             ),
-            onPressed: () {
-              context.goNamed('donationpage');
-            },
-            child: Text(
-              "Donate",
-              style: TextStyle(
-                fontSize: 22,
+          );
+        } else {
+          return Scaffold(
+            floatingActionButton: Container(
+              alignment: Alignment.bottomCenter,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.orange.shade400,
+                  fixedSize: Size(150, 50),
+                  shape: StadiumBorder(),
+                ),
+                onPressed: () {
+                  context.goNamed('donationpage');
+                },
+                child: Text(
+                  "Donate",
+                  style: TextStyle(
+                    fontSize: 22,
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        backgroundColor: Colors.grey.shade100,
-        appBar: AppBar(
-          iconTheme: IconThemeData(
-            color: Colors.black,
-          ),
-          title: Text(
-            ngoName.toString(),
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 20,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  DynamicLinkProvider().createString('ngoprofile').then(
-                    (value) {
-                      Share.share(value);
-                    },
-                  );
-                },
-                icon: Icon(
-                  Icons.share,
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+            backgroundColor: Colors.grey.shade100,
+            appBar: AppBar(
+              iconTheme: IconThemeData(
+                color: Colors.black,
+              ),
+              title: Text(
+                snapshot.data!["ngoName"],
+                style: TextStyle(
                   color: Colors.black,
-                ))
-          ],
-          backgroundColor: Colors.grey.shade100,
-          elevation: 0,
-        ),
-        body: ListView(
-          children: [
-            StackNGOProfileAndBackground(
-                bgPic: ngoTeamPhoto, logoPic: ngoLogoPhoto),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.07,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      DynamicLinkProvider().createString('ngoprofile').then(
+                        (value) {
+                          Share.share(value);
+                        },
+                      );
+                    },
+                    icon: Icon(
+                      Icons.share,
+                      color: Colors.black,
+                    ))
+              ],
+              backgroundColor: Colors.grey.shade100,
+              elevation: 0,
             ),
-            ngoNameText(ngoName, context),
-            rating(ngoRating),
-            ngoCause(ngoCauses, context),
-            NGOBioTexts(ngoBio: ngoBio),
-            // aboutNGOText(),
-            CauseWidget(ngoWorkingPhotos: ngoWorkingPhotos),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.1,
+            body: ListView(
+              children: [
+                StackNGOProfileAndBackground(
+                    bgPic: snapshot.data!["ngoTeamPhotos"][0],
+                    logoPic: snapshot.data!["ngoLogoPhoto"]),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.07,
+                ),
+                ngoNameText(snapshot.data!["ngoName"], context),
+                rating(snapshot.data!["ngoRating"]),
+                ngoCause(snapshot.data!["ngoCauses"], context),
+                NGOBioTexts(ngoBio: snapshot.data!["ngoBio"]),
+                // aboutNGOText(),
+                CauseWidget(
+                    ngoWorkingPhotos: snapshot.data!["ngoWorkingPhotos"]),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.1,
+                ),
+                // volunteerText(),
+                // VolunterProgramTilesWidget(),
+                // eventText(),
+                // EventsWidget(),
+              ],
             ),
-            // volunteerText(),
-            // VolunterProgramTilesWidget(),
-            // eventText(),
-            // EventsWidget(),
-          ],
-        ),
-      ),
+          );
+        }
+      },
     );
   }
 }

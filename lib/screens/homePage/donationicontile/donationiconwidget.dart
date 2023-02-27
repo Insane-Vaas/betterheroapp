@@ -43,7 +43,7 @@ class DonationIconWidget extends StatelessWidget {
     ];
 
     return Container(
-        color: Colors.grey.shade100,
+        color: Colors.white,
         child: GridView.builder(
           padding: EdgeInsets.zero,
           shrinkWrap: true,

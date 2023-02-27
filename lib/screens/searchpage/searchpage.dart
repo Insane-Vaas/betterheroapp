@@ -19,18 +19,8 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  List<RecentSearch> list = [];
-  Future getResults() async {
-    List<RecentSearch> searchList = await DBProvider.db.getRecentSearch();
-    setState(() {
-      list = (searchList == null) ? [] : searchList;
-    });
-  }
-
   @override
   void initState() {
-    getResults();
-    print(widget.searchResult);
     super.initState();
   }
 
@@ -38,18 +28,9 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
-      body: ListView(
-        shrinkWrap: true,
-        scrollDirection: Axis.vertical,
-        children: [
-          SearchTextFieldWidget(),
-          widget.searchResult == null
-              ? RecentSearchListWidget(recentSearch: list)
-              : SearchResultsWidget(
-                  searchText: widget.searchResult,
-                ),
-        ],
-      ),
+      body: widget.searchResult == null
+          ? RecentSearchListWidget()
+          : SearchResultsWidget(searchText: widget.searchResult),
     );
   }
 }
@@ -85,7 +66,7 @@ class SearchTextFieldWidget extends StatelessWidget {
                 },
                 icon: Icon(
                   CupertinoIcons.back,
-                  color: Colors.green.shade400,
+                  color: Colors.orange.shade400,
                 ),
               ),
               suffixIcon: IconButton(
@@ -112,7 +93,7 @@ class SearchTextFieldWidget extends StatelessWidget {
                 },
                 icon: Icon(
                   CupertinoIcons.search,
-                  color: Colors.green.shade400,
+                  color: Colors.orange.shade400,
                 ),
               ),
               enabledBorder: enabledBorder(),
@@ -131,7 +112,7 @@ OutlineInputBorder enabledBorder() {
       Radius.circular(20),
     ),
     borderSide: BorderSide(
-      color: Colors.green.shade300.withOpacity(0.8),
+      color: Colors.orange.shade300.withOpacity(0.8),
       width: 2,
     ),
   );
@@ -143,7 +124,7 @@ OutlineInputBorder focusedBorder() {
       Radius.circular(20),
     ),
     borderSide: BorderSide(
-      color: Colors.green.shade400,
+      color: Colors.orange.shade400,
       width: 3,
     ),
   );

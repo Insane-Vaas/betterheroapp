@@ -1,76 +1,66 @@
-import 'dart:convert';
-
-import 'package:betterheroapp/model/ngomodel/ngomodel.dart';
+import 'package:betterheroapp/httprequests/ngolist.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
 class NGOTilesListWidget extends StatefulWidget {
-  const NGOTilesListWidget({super.key});
+  final String? location;
+  const NGOTilesListWidget({super.key, this.location});
 
   @override
   State<NGOTilesListWidget> createState() => _NGOTilesListWidgetState();
 }
 
 class _NGOTilesListWidgetState extends State<NGOTilesListWidget> {
-  List<dynamic> list = [];
-
-  Future getNgoData() async {
-    final String x = await rootBundle.loadString('images/data.json');
-    final List data = await json.decode(x)['ngoData'];
-
-    setState(() {
-      list = data;
-    });
-  }
-
-  @override
-  void initState() {
-    getNgoData();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: EdgeInsets.all(8),
-      shrinkWrap: true,
-      physics: ClampingScrollPhysics(),
-      itemCount: list.length,
-      itemBuilder: (context, index) {
-        return NGOTileWidget(
-          ngoName: list[index]['ngoName'],
-          ngoCauses: list[index]['ngoCauses'],
-          ngoRating: list[index]['ngoRating'],
-          imgList: list[index]['ngoWorkingPhotos'],
-          ngoBio: list[index]['ngoBio'],
-          ngoLogoPic: list[index]['ngoLogoPhoto'],
-          ngoTeamPhoto: list[index]['ngoTeamPhotos'][0],
-        );
+    return FutureBuilder(
+      future: GetNGOList().getHomeNGOList(widget.location.toString()),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Container(
+            height: 200,
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        } else {
+          return ListView.builder(
+            padding: EdgeInsets.all(8),
+            shrinkWrap: true,
+            physics: ClampingScrollPhysics(),
+            itemCount: snapshot.data!.length,
+            itemBuilder: (context, index) {
+              return NGOTileWidget(
+                ngoName: snapshot.data![index]['ngoName'],
+                ngoCauses: snapshot.data![index]['ngoCauses'],
+                ngoRating: snapshot.data![index]['ngoRating'],
+                imgList: snapshot.data![index]['ngoWorkingPhotos'],
+                ngoUID: snapshot.data![index]['_id'],
+              );
+            },
+          );
+        }
       },
     );
   }
 }
 
 class NGOTileWidget extends StatefulWidget {
+  final String? ngoUID;
   final String? ngoName;
   final String? ngoCauses;
   final String? ngoRating;
   final List<dynamic>? imgList;
-  final String? ngoLogoPic;
-  final String? ngoBio;
-  final String? ngoTeamPhoto;
 
   const NGOTileWidget({
     super.key,
+    required this.ngoUID,
     required this.ngoName,
     required this.ngoCauses,
     required this.ngoRating,
     required this.imgList,
-    this.ngoLogoPic,
-    this.ngoBio,
-    this.ngoTeamPhoto,
   });
 
   @override
@@ -87,13 +77,7 @@ class _NGOTileWidgetState extends State<NGOTileWidget> {
           'ngoprofilePage',
           extra: widget.imgList,
           queryParams: {
-            "ngoUID": "awdadwwad",
-            "ngoName": widget.ngoName,
-            "ngoCauses": widget.ngoCauses,
-            "ngoRating": widget.ngoRating,
-            "ngoLogoPhoto": widget.ngoLogoPic,
-            "ngoBio": widget.ngoBio,
-            "ngoTeamPhoto": widget.ngoTeamPhoto
+            "ngoUID": widget.ngoUID,
           },
         );
       },
@@ -104,14 +88,18 @@ class _NGOTileWidgetState extends State<NGOTileWidget> {
             MediaQuery.of(context).size.height * 0.01,
             MediaQuery.of(context).size.width * 0.033,
             MediaQuery.of(context).size.height * 0.01),
-        height: MediaQuery.of(context).size.height * 0.3,
+        height: MediaQuery.of(context).size.height * 0.31,
         width: MediaQuery.of(context).size.width * 0.9,
         child: Column(
           children: [
             ngoTileBackImageAndLike(
                 MediaQuery.of(context).size.height * 0.23, widget.imgList),
             ngoNameCauseAndRating(
-                widget.ngoName, widget.ngoCauses, widget.ngoRating, context),
+                widget.ngoName,
+                widget.ngoCauses,
+                widget.ngoRating,
+                MediaQuery.of(context).size.width * 0.9,
+                context),
           ],
         ),
       ),
@@ -136,6 +124,7 @@ Container ngoTileBackImageAndLike(double height, List<dynamic>? imgList) {
         PageView.builder(
           itemCount: imgList!.length,
           reverse: false,
+          physics: BouncingScrollPhysics(),
           controller: _pageController,
           itemBuilder: (context, index) {
             return ClipRRect(
@@ -208,29 +197,30 @@ Container ngoTileBackImageAndLike(double height, List<dynamic>? imgList) {
 
 BoxDecoration ngoTileWidgetDecoration() {
   return BoxDecoration(
-      borderRadius: BorderRadius.circular(18),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.grey.shade500,
-          blurRadius: 5,
-          offset: Offset(4, 4),
-        ),
-        BoxShadow(
-          color: Colors.grey.shade300,
-          blurRadius: 4,
-          offset: Offset(-1, -1),
-        ),
-      ],
-      color: Colors.grey.shade200);
+    borderRadius: BorderRadius.circular(18),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.grey.shade500,
+        blurRadius: 5,
+        offset: Offset(4, 4),
+      ),
+      BoxShadow(
+        color: Colors.grey.shade300,
+        blurRadius: 4,
+        offset: Offset(-1, -1),
+      ),
+    ],
+    color: Colors.white,
+  );
 }
 
 Container ngoNameCauseAndRating(String? ngoName, String? ngoCause,
-    String? ngorating, BuildContext context) {
+    String? ngorating, double width, BuildContext context) {
   return Container(
     child: Row(
       children: [
         Expanded(child: ngoNameCause(ngoName, ngoCause, context)),
-        ngoRating(ngorating, context),
+        ngoRating(ngorating),
       ],
     ),
   );
@@ -239,8 +229,8 @@ Container ngoNameCauseAndRating(String? ngoName, String? ngoCause,
 Container ngoNameCause(
     String? ngoName, String? ngoCause, BuildContext context) {
   return Container(
-    margin: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.03,
-        MediaQuery.of(context).size.height * 0.01, 0, 0),
+    // width: 220,
+    margin: EdgeInsets.fromLTRB(8, 4, 0, 4),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -276,14 +266,13 @@ TextStyle ngoCauseTextStyle() {
   );
 }
 
-Container ngoRating(String? ngorating, BuildContext context) {
+Container ngoRating(String? ngorating) {
   return Container(
     decoration: BoxDecoration(
       color: Colors.orange.shade400,
       borderRadius: BorderRadius.circular(20),
     ),
-    margin:
-        EdgeInsets.fromLTRB(0, 0, MediaQuery.of(context).size.width * 0.033, 0),
+    margin: EdgeInsets.fromLTRB(8, 4, 10, 4),
     padding: EdgeInsets.fromLTRB(8, 2, 8, 2),
     alignment: Alignment.topRight,
     child: Text(
