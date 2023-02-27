@@ -10,7 +10,7 @@ class GetNGOList {
 
     try {
       res = await _dio.get(
-          'http://192.168.1.3:3000/api/ngoPage/ngoList?location=$location');
+          'https://betterhero.onrender.com/api/ngoPage/ngoList?location=$location');
       final data = await json.decode(res.toString());
       return data['ngoData'];
     } catch (e) {
@@ -24,7 +24,8 @@ class GetNGOList {
     var res = null;
 
     try {
-      res = await _dio.get('http://192.168.1.3:3000/api/search/?text=$text');
+      res = await _dio
+          .get('https://betterhero.onrender.com/api/search/?text=$text');
       final data = await json.decode(res.toString());
       return data['ngoSearchList'];
     } catch (e) {

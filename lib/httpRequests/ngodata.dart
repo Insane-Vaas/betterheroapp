@@ -9,8 +9,8 @@ class GetNGOData {
     var res = null;
 
     try {
-      res =
-          await _dio.get('http://192.168.1.3:3000/api/ngoPage/getNGO?uid=$uid');
+      res = await _dio
+          .get('https://betterhero.onrender.com/api/ngoPage/getNGO?uid=$uid');
       final data = await json.decode(res.toString());
       return data['ngoData'];
     } catch (e) {
