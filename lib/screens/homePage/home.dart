@@ -59,14 +59,9 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: SafeArea(
-        child: Scaffold(
-          backgroundColor: Colors.white,
-          body: customScrollView(location, name, profilePic, context),
-        ),
-      ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: customScrollView(location, name, profilePic, context),
     );
   }
 }
@@ -194,9 +189,10 @@ class AppBarWidget extends StatelessWidget {
           name: name,
         ),
       ],
-      pinned: false,
+      pinned: true,
       floating: true,
       centerTitle: false,
+      snap: true,
     );
   }
 }

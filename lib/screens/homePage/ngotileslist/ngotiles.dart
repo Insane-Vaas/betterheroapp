@@ -77,7 +77,7 @@ class _NGOTileWidgetState extends State<NGOTileWidget> {
           'ngoprofilePage',
           extra: widget.imgList,
           queryParams: {
-            "ngoUID": widget.ngoUID,
+            "ngoUID": widget.ngoUID.toString(),
           },
         );
       },

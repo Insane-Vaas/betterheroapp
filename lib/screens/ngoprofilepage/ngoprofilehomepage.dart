@@ -18,6 +18,7 @@ class NGOProfileHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(ngoUID);
     return FutureBuilder(
       future: GetNGOData().getNGOData(ngoUID.toString()),
       builder: (context, snapshot) {
@@ -67,7 +68,9 @@ class NGOProfileHomePage extends StatelessWidget {
               actions: [
                 IconButton(
                     onPressed: () {
-                      DynamicLinkProvider().createString('ngoprofile').then(
+                      DynamicLinkProvider()
+                          .createString('ngoprofile?ngoUID=$ngoUID')
+                          .then(
                         (value) {
                           Share.share(value);
                         },

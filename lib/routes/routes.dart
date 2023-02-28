@@ -84,7 +84,7 @@ class AppRouter {
             name: 'ngoprofilePage',
             builder: (context, state) {
               return NGOProfileHomePage(
-                ngoUID: state.queryParams["ngoUID"],
+                ngoUID: state.queryParams['ngoUID'],
               );
             },
             routes: [
