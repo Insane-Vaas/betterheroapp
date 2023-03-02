@@ -1,7 +1,11 @@
+import 'dart:math';
+
 import 'package:betterheroapp/httprequests/ngodata.dart';
 import 'package:betterheroapp/routes/dynamiclink.dart';
 import 'package:betterheroapp/screens/ngoprofilepage/ngobio.dart';
+import 'package:betterheroapp/screens/ngoprofilepage/overview.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
@@ -18,101 +22,193 @@ class NGOProfileHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(ngoUID);
-    return FutureBuilder(
-      future: GetNGOData().getNGOData(ngoUID.toString()),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Container(
-            height: 200,
-            child: Center(
-              child: CircularProgressIndicator(),
+    return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (value) {
+          print(value);
+        },
+        currentIndex: 0,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        items: [
+          BottomNavigationBarItem(
+            label: "Screen 1",
+            icon: Icon(
+              Icons.home,
             ),
-          );
-        } else {
-          return Scaffold(
-            floatingActionButton: Container(
-              alignment: Alignment.bottomCenter,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange.shade400,
-                  fixedSize: Size(150, 50),
-                  shape: StadiumBorder(),
-                ),
-                onPressed: () {
-                  context.goNamed('donationpage');
-                },
-                child: Text(
-                  "Donate",
-                  style: TextStyle(
-                    fontSize: 22,
+          ),
+          BottomNavigationBarItem(
+            label: "Screen 2",
+            icon: Icon(
+              Icons.update_sharp,
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: "Screen 3",
+            icon: Icon(
+              Icons.event,
+            ),
+          ),
+        ],
+      ),
+      floatingActionButton: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          fixedSize: Size(120, 50),
+          backgroundColor: Colors.amber.shade500,
+        ),
+        child: Text(
+          "Donate",
+          style: TextStyle(
+            fontSize: 24,
+          ),
+        ),
+        onPressed: () {
+          print("Donate Button");
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        titleTextStyle: appBarTextStyle(),
+        titleSpacing: 0,
+        centerTitle: false,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: Text(
+          "NGO Name",
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
+      ),
+      body: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          Stack(
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height * 0.3,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(
+                      "https://github.com/Insane-Vaas/randompics/blob/main/udhaar_bg.jpg?raw=true",
+                    ),
                   ),
                 ),
               ),
-            ),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-            backgroundColor: Colors.grey.shade100,
-            appBar: AppBar(
-              iconTheme: IconThemeData(
-                color: Colors.black,
-              ),
-              title: Text(
-                snapshot.data!["ngoName"],
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              actions: [
-                IconButton(
-                    onPressed: () {
-                      DynamicLinkProvider()
-                          .createString('ngoprofile?ngoUID=$ngoUID')
-                          .then(
-                        (value) {
-                          Share.share(value);
-                        },
-                      );
-                    },
+              Positioned(
+                right: 2,
+                child: Container(
+                  margin: EdgeInsets.all(4),
+                  padding: EdgeInsets.all(2),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.grey.shade500.withOpacity(0.5),
+                  ),
+                  child: IconButton(
                     icon: Icon(
-                      Icons.share,
-                      color: Colors.black,
-                    ))
-              ],
-              backgroundColor: Colors.grey.shade100,
-              elevation: 0,
+                      Icons.share_rounded,
+                      size: 34,
+                      color: Colors.white.withOpacity(0.8),
+                    ),
+                    onPressed: () {
+                      print("Some Stuff");
+                    },
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                right: sqrt1_2,
+                child: Container(
+                  height: 80,
+                  width: 80,
+                  alignment: Alignment.center,
+                  color: Colors.white,
+                  child: Text("Rating"),
+                ),
+              ),
+            ],
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(
+              10,
+              4,
+              10,
+              10,
             ),
-            body: ListView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                StackNGOProfileAndBackground(
-                    bgPic: snapshot.data!["ngoTeamPhotos"][0],
-                    logoPic: snapshot.data!["ngoLogoPhoto"]),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.07,
+                Text(
+                  "Causes",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-                ngoNameText(snapshot.data!["ngoName"], context),
-                rating(snapshot.data!["ngoRating"]),
-                ngoCause(snapshot.data!["ngoCauses"], context),
-                NGOBioTexts(ngoBio: snapshot.data!["ngoBio"]),
-                // aboutNGOText(),
-                CauseWidget(
-                    ngoWorkingPhotos: snapshot.data!["ngoWorkingPhotos"]),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.1,
+                Wrap(
+                  children: List<Widget>.generate(
+                    growable: true,
+                    4,
+                    (index) => Container(
+                      margin: EdgeInsets.all(8),
+                      child: Chip(
+                        avatar: Icon(Icons.help),
+                        padding: EdgeInsets.all(9),
+                        labelPadding: EdgeInsets.all(4),
+                        label: Text(
+                          "Causes",
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-                // volunteerText(),
-                // VolunterProgramTilesWidget(),
-                // eventText(),
-                // EventsWidget(),
               ],
             ),
-          );
-        }
-      },
+          ),
+          Container(
+            alignment: Alignment.center,
+            color: Colors.black,
+            height: MediaQuery.of(context).size.height * 0.22,
+            child: Text(
+              "Bio Text goes here",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 22,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
+
+    // FutureBuilder(
+    //   future: GetNGOData().getNGOData(ngoUID.toString()),
+    //   builder: (context, snapshot) {
+    //     if (snapshot.connectionState == ConnectionState.waiting) {
+    //       return Scaffold(
+    //         backgroundColor: Colors.white,
+    //         body: Center(
+    //           child: CircularProgressIndicator(),
+    //         ),
+    //       );
+    //     } else {
+    //       return
+    //     }
+    //   },
+    // );
   }
+}
+
+TextStyle appBarTextStyle() {
+  return TextStyle(
+    color: Colors.black,
+    fontSize: 21,
+    fontWeight: FontWeight.w600,
+  );
 }
 
 Widget volunteerText() {

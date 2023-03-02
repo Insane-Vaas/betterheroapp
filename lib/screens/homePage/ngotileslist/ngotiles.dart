@@ -5,8 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
 class NGOTilesListWidget extends StatefulWidget {
-  final String? location;
-  const NGOTilesListWidget({super.key, this.location});
+  const NGOTilesListWidget({super.key});
 
   @override
   State<NGOTilesListWidget> createState() => _NGOTilesListWidgetState();
@@ -16,7 +15,7 @@ class _NGOTilesListWidgetState extends State<NGOTilesListWidget> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: GetNGOList().getHomeNGOList(widget.location.toString()),
+      future: GetNGOList().getHomeNGOList(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Container(

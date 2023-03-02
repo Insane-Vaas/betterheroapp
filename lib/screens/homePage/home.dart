@@ -140,7 +140,7 @@ CustomScrollView customScrollView(
         ),
       ),
       SliverToBoxAdapter(
-        child: NGOTilesListWidget(location: location),
+        child: NGOTilesListWidget(),
       ),
     ],
   );

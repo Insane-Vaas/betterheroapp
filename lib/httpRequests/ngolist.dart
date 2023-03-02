@@ -5,12 +5,12 @@ import 'package:diox/diox.dart';
 class GetNGOList {
   Dio _dio = Dio();
 
-  Future<List> getHomeNGOList(String location) async {
+  Future<List> getHomeNGOList() async {
     var res = null;
 
     try {
-      res = await _dio.get(
-          'https://betterhero.onrender.com/api/ngoPage/ngoList?location=$location');
+      res =
+          await _dio.get('https://betterhero.onrender.com/api/ngoPage/ngoList');
       final data = await json.decode(res.toString());
       return data['ngoData'];
     } catch (e) {
