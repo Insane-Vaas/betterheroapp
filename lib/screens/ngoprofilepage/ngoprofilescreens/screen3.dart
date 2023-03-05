@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Screen2 extends StatelessWidget {
-  const Screen2({super.key});
+class Screen3 extends StatelessWidget {
+  const Screen3({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -9,7 +9,7 @@ class Screen2 extends StatelessWidget {
       padding: EdgeInsets.zero,
       children: [
         Center(
-          child: Text("Screen 2"),
+          child: Text("Screen 3"),
         ),
       ],
     );

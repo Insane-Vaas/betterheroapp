@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:betterheroapp/httprequests/ngodata.dart';
 import 'package:betterheroapp/routes/dynamiclink.dart';
 import 'package:betterheroapp/screens/ngoprofilepage/ngobio.dart';
+import 'package:betterheroapp/screens/ngoprofilepage/ngoprofilescreens/screen1.dart';
+import 'package:betterheroapp/screens/ngoprofilepage/ngoprofilescreens/screen2.dart';
 import 'package:betterheroapp/screens/ngoprofilepage/overview.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,8 +13,9 @@ import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
 
 import 'ngobackgroundandprofile.dart';
+import 'ngoprofilescreens/screen3.dart';
 
-class NGOProfileHomePage extends StatelessWidget {
+class NGOProfileHomePage extends StatefulWidget {
   final String? ngoUID;
 
   const NGOProfileHomePage({
@@ -21,13 +24,26 @@ class NGOProfileHomePage extends StatelessWidget {
   });
 
   @override
+  State<NGOProfileHomePage> createState() => _NGOProfileHomePageState();
+}
+
+class _NGOProfileHomePageState extends State<NGOProfileHomePage> {
+  static const List<Widget> _screenList = [
+    Screen1(),
+    Screen2(),
+    Screen3(),
+  ];
+  int _currentIdx = 0;
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         onTap: (value) {
-          print(value);
+          setState(() {
+            _currentIdx = value;
+          });
         },
-        currentIndex: 0,
+        currentIndex: _currentIdx,
         backgroundColor: Colors.white,
         elevation: 0,
         items: [
@@ -80,109 +96,25 @@ class NGOProfileHomePage extends StatelessWidget {
         iconTheme: IconThemeData(
           color: Colors.black,
         ),
-      ),
-      body: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          Stack(
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.3,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(
-                      "https://github.com/Insane-Vaas/randompics/blob/main/udhaar_bg.jpg?raw=true",
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                right: 2,
-                child: Container(
-                  margin: EdgeInsets.all(4),
-                  padding: EdgeInsets.all(2),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.grey.shade500.withOpacity(0.5),
-                  ),
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.share_rounded,
-                      size: 34,
-                      color: Colors.white.withOpacity(0.8),
-                    ),
-                    onPressed: () {
-                      print("Some Stuff");
-                    },
-                  ),
-                ),
-              ),
-              Positioned(
-                bottom: 0,
-                right: sqrt1_2,
-                child: Container(
-                  height: 80,
-                  width: 80,
-                  alignment: Alignment.center,
-                  color: Colors.white,
-                  child: Text("Rating"),
-                ),
-              ),
-            ],
-          ),
-          Container(
-            margin: EdgeInsets.fromLTRB(
-              10,
-              4,
-              10,
-              10,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  "Causes",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                Wrap(
-                  children: List<Widget>.generate(
-                    growable: true,
-                    4,
-                    (index) => Container(
-                      margin: EdgeInsets.all(8),
-                      child: Chip(
-                        avatar: Icon(Icons.help),
-                        padding: EdgeInsets.all(9),
-                        labelPadding: EdgeInsets.all(4),
-                        label: Text(
-                          "Causes",
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            alignment: Alignment.center,
-            color: Colors.black,
-            height: MediaQuery.of(context).size.height * 0.22,
-            child: Text(
-              "Bio Text goes here",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 22,
-              ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              DynamicLinkProvider()
+                  .createString('ngoprofile?ngoUID=${widget.ngoUID}')
+                  .then(
+                (value) {
+                  Share.share(value);
+                },
+              );
+            },
+            icon: Icon(
+              Icons.share,
+              color: Colors.black,
             ),
           ),
         ],
       ),
+      body: _screenList[_currentIdx],
     );
 
     // FutureBuilder(
