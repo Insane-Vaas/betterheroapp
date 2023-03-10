@@ -9,6 +9,7 @@ import 'package:betterheroapp/screens/ngoprofilepage/overview.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -31,7 +32,6 @@ class _NGOProfileHomePageState extends State<NGOProfileHomePage> {
   static const List<Widget> _screenList = [
     Screen1(),
     Screen2(),
-    Screen3(),
   ];
   int _currentIdx = 0;
   @override
@@ -45,42 +45,60 @@ class _NGOProfileHomePageState extends State<NGOProfileHomePage> {
         },
         currentIndex: _currentIdx,
         backgroundColor: Colors.white,
+        selectedFontSize: 15,
+        unselectedFontSize: 12,
+        selectedIconTheme: IconThemeData(color: Colors.orange),
+        selectedItemColor: Colors.orange,
         elevation: 0,
         items: [
           BottomNavigationBarItem(
-            label: "Screen 1",
+            label: "Info",
             icon: Icon(
-              Icons.home,
+              FontAwesomeIcons.handshake,
             ),
           ),
           BottomNavigationBarItem(
-            label: "Screen 2",
+            label: "Updates",
             icon: Icon(
               Icons.update_sharp,
             ),
           ),
-          BottomNavigationBarItem(
-            label: "Screen 3",
-            icon: Icon(
-              Icons.event,
-            ),
-          ),
         ],
       ),
-      floatingActionButton: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          fixedSize: Size(120, 50),
-          backgroundColor: Colors.amber.shade500,
-        ),
-        child: Text(
-          "Donate",
-          style: TextStyle(
-            fontSize: 24,
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              fixedSize: Size(150, 50),
+              backgroundColor: Colors.amber.shade500,
+            ),
+            child: Text(
+              "Donate",
+              style: TextStyle(
+                fontSize: 24,
+              ),
+            ),
+            onPressed: () {
+              print("Donate Button");
+            },
           ),
-        ),
-        onPressed: () {
-          print("Donate Button");
-        },
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              fixedSize: Size(150, 50),
+              backgroundColor: Colors.amber.shade500,
+            ),
+            child: Text(
+              "Volunteer",
+              style: TextStyle(
+                fontSize: 24,
+              ),
+            ),
+            onPressed: () {
+              print("Donate Button");
+            },
+          )
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       backgroundColor: Colors.white,

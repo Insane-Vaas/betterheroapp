@@ -183,7 +183,24 @@ class AppBarWidget extends StatelessWidget {
       title: title(location, name, context),
       backgroundColor: Colors.white,
       actions: [
-        SearchArea(),
+        Hero(
+          tag: "search",
+          child: GestureDetector(
+            onTap: () {
+              context.goNamed('searchpage');
+            },
+            child: Container(
+              margin: EdgeInsets.all(4),
+              height: 60,
+              alignment: Alignment.bottomCenter,
+              child: Icon(
+                Icons.search,
+                color: Colors.orange,
+                size: 35,
+              ),
+            ),
+          ),
+        ),
         ProfilePic(
           profilePic: profilePic,
           name: name,
@@ -271,117 +288,6 @@ Widget title(String location, String name, BuildContext context) {
       ],
     ),
   );
-}
-
-class SearchArea extends StatefulWidget {
-  SearchArea({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  State<SearchArea> createState() => _SearchAreaState();
-}
-
-class _SearchAreaState extends State<SearchArea> {
-  bool animation = false;
-  searchText() {
-    Future.delayed(
-      Duration(
-        seconds: 2,
-      ),
-      () {
-        setState(() {
-          animation = true;
-        });
-      },
-    );
-  }
-
-  @override
-  void initState() {
-    searchText();
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // final ScrollController controller = ScrollController();
-    return Hero(
-      tag: "search",
-      child: GestureDetector(
-        onTap: () {
-          context.pushNamed('searchpage');
-        },
-        child: Container(
-          margin: EdgeInsets.fromLTRB(0, 1.3.h, 0, 0),
-          height: 3.h,
-          width: 50.w,
-          padding: EdgeInsets.all(5),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(
-                25,
-              ),
-              border: Border.all(
-                color: Colors.orange.shade400,
-                width: 0.1.h,
-              )),
-          alignment: Alignment.centerLeft,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.search,
-                color: Colors.orange.shade400,
-                size: 25,
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(4, 0, 0, 0),
-                alignment: Alignment.centerLeft,
-                height: MediaQuery.of(context).size.height * 0.0512,
-                width: 34.w,
-                child: Row(
-                  children: <Widget>[
-                    const Text(
-                      'Search for ',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                      ),
-                    ),
-                    Flexible(
-                      child: AnimatedTextKit(
-                        animatedTexts: [
-                          TypewriterAnimatedText(
-                            'NGOs...',
-                            speed: Duration(milliseconds: 90),
-                            textStyle: animationTextStyle(),
-                          ),
-                          TypewriterAnimatedText(
-                            'causes...',
-                            speed: Duration(milliseconds: 90),
-                            textStyle: animationTextStyle(),
-                          ),
-                          TypewriterAnimatedText(
-                            'heroes...',
-                            speed: Duration(milliseconds: 90),
-                            textStyle: animationTextStyle(),
-                          ),
-                        ],
-                        onTap: () {
-                          context.pushNamed('searchpage');
-                        },
-                        repeatForever: true,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 }
 
 OutlineInputBorder enabledBorder() {

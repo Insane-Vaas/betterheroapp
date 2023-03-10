@@ -45,7 +45,7 @@ class _Screen1State extends State<Screen1> {
                       20,
                     ),
                   ),
-                  height: MediaQuery.of(context).size.height * 0.1,
+                  height: MediaQuery.of(context).size.height * 0.095,
                   width: 80,
                   alignment: Alignment.center,
                   child: Column(
@@ -79,8 +79,20 @@ class _Screen1State extends State<Screen1> {
                           ],
                         ),
                       ),
-                      Text("500+"),
-                      Text("Reviews")
+                      Text(
+                        "500+",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Text(
+                        "Reviews",
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: Colors.grey.shade700,
+                        ),
+                      )
                     ],
                   ),
                 ),
